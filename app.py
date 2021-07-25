@@ -76,12 +76,12 @@ async def messages(req: Request) -> Response:
         return json_response(data=response.body, status=response.status)
     return Response(status=201)
 
-async def messages(req: Request) -> Response:
+async def wake(req: Request) -> Response:
     return Response(status=200)
 
 APP = web.Application(middlewares=[aiohttp_error_middleware])
 APP.router.add_post("/api/messages", messages)
-APP.router.add_get("/",)
+APP.router.add_get("/",wake)
 
 
 if __name__ == "__main__":
