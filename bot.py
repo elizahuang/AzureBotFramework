@@ -152,8 +152,8 @@ class MyBot(ActivityHandler):
                     + "Please type anything to get started."
                 )
         elif turn_context.activity.text=='adaptive':
-            contextToReturn.attachments = [Attachment(content_type='application/vnd.microsoft.card.adaptive',
-                                      content=adapCard)]
+            contextToReturn =MessageFactory.attachments([Attachment(content_type='application/vnd.microsoft.card.adaptive',
+                                      content=adapCard)])
         else:   
             contextToReturn=f"You said '{ turn_context.activity.text }'"
         await turn_context.send_activity(contextToReturn)
