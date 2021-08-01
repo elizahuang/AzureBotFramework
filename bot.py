@@ -4,120 +4,8 @@
 from botbuilder.core import ActivityHandler, TurnContext,CardFactory,MessageFactory
 from botbuilder.schema import ChannelAccount,HeroCard, CardAction, CardImage,ActionTypes ,Attachment,Activity,ActivityTypes
 import requests,json
-
-adapCard={
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "body": [
-    {
-      "type": "Container",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "Publish Adaptive Card schema",
-          "weight": "bolder",
-          "size": "medium"
-        },
-        {
-          "type": "ColumnSet",
-          "columns": [
-            {
-              "type": "Column",
-              "width": "auto",
-              "items": [
-                {
-                  "type": "Image",
-                  "url": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
-                  "size": "small",
-                  "style": "person"
-                }
-              ]
-            },
-            {
-              "type": "Column",
-              "width": "stretch",
-              "items": [
-                {
-                  "type": "TextBlock",
-                  "text": "Matt Hidinger",
-                  "weight": "bolder",
-                  "wrap": True
-                },
-                {
-                  "type": "TextBlock",
-                  "spacing": "none",
-                  "text": "Created {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
-                  "isSubtle": True,
-                  "wrap": True
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "Container",
-      "items": [
-        {
-          "type": "TextBlock",
-          "text": "Now that we have defined the main rules and features of the format, we need to produce a schema and publish it to GitHub. The schema will be the starting point of our reference documentation.",
-          "wrap": True
-        },
-        {
-          "type": "FactSet",
-          "facts": [
-            {
-              "title": "Board:",
-              "value": "Adaptive Card"
-            },
-            {
-              "title": "List:",
-              "value": "Backlog"
-            },
-            {
-              "title": "Assigned to:",
-              "value": "Matt Hidinger"
-            },
-            {
-              "title": "Due date:",
-              "value": "Not set"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "actions": [
-    {
-      "type": "Action.ShowCard",
-      "title": "Comment",
-      "card": {
-        "type": "AdaptiveCard",
-        "body": [
-          {
-            "type": "Input.Text",
-            "id": "comment",
-            "isMultiline": True,
-            "placeholder": "Enter your comment"
-          }
-        ],
-        "actions": [
-          {
-            "type": "Action.Submit",
-            "title": "OK"
-          }
-        ]
-      }
-    },
-    {
-      "type": "Action.OpenUrl",
-      "title": "View",
-      "url": "https://adaptivecards.io"
-    }
-  ]
-}
+from updateCard import *
+from viewAllCard import *
 
 def create_hero_card() -> Attachment:
     herocard = HeroCard(title="推薦以下兩個選項", 
@@ -152,8 +40,17 @@ class MyBot(ActivityHandler):
                     + "Please type anything to get started."
                 )
         elif turn_context.activity.text=='adaptive':
-            contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
-                                      content=adapCard))
+            # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
+            #                           content=adapCard))
+            contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareUpdateCard()))        
+        elif turn_context.activity.text=='viewAllTest':
+            contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCardTest()))
+        elif turn_context.activity.text=='檢視代辦事項':
+            tasksInfo=[{"todo_id":"123123","todo_name":"test1","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
+              "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True},\
+                {"todo_id":"321321","todo_name":"test2","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
+              "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
+            contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCard(tasksInfo)))
         else:   
             contextToReturn=f"You said '{ turn_context.activity.text }'"
         await turn_context.send_activity(contextToReturn)
