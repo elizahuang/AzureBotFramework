@@ -27,18 +27,20 @@ class MyBot(ActivityHandler):
         print((turn_context.activity))
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
-        if turn_context.activity.text != None and turn_context.activity.text.startswith("工號_"):
-            # TODO 連接 API
-            # see mongo DB connect mongo db
-            contextToReturn='恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
-        elif turn_context.activity.text != None and turn_context.activity.text=='help':
-            contextToReturn='輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
-        elif turn_context.activity.text != None and turn_context.activity.text=='新增代辦事項':
-            contextToReturn=MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
-                                      content=copy.deepcopy(addToDoListAdapCard)))
-        elif turn_context.activity.value != None and turn_context.activity.value['card_type'] == 'addToDoList':
-            # TODO 連接 API
-            contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
+        if turn_context.activity.text != None:  
+            if turn_context.activity.text.startswith("工號_"):
+                # TODO 連接 API
+                # see mongo DB connect mongo db
+                contextToReturn='恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+            elif turn_context.activity.text=='help':
+                contextToReturn='輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
+            elif turn_context.activity.text=='新增代辦事項':
+                contextToReturn=MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
+                                        content=copy.deepcopy(addToDoListAdapCard)))
+            elif turn_context.activity.value['card_type'] == 'addToDoList':
+                # TODO 連接 API
+                contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
+            
         elif turn_context.activity.text=='todo':
             contextToReturn=requests.get('https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
         elif turn_context.activity.text=='my_ehr':
