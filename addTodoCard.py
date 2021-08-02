@@ -1,4 +1,4 @@
-addCard=addToDoListAdapCard={
+addToDoListAdapCard={
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
