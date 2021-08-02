@@ -116,6 +116,7 @@ class MyBot(ActivityHandler):
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     contextToReturn=prepareUpdateCard(singletask)
+                    print('test1')
                 # elif turn_context.activity.value['card_request_type'] == 'delete_task':
                     # call 德瑋的function
                 elif turn_context.activity.value['card_request_type'] == 'submit_update':
