@@ -31,14 +31,15 @@ class MyBot(ActivityHandler):
     contextToReturn = None
 
     async def on_message_activity(self, turn_context: TurnContext):
-        print((turn_context.activity.value))
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         if turn_context.activity.text != None:
-            print(turn_context.activity.value)
+            print(turn_context.activity.text)
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
+                
+                # response
                 contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
             elif turn_context.activity.text == 'help':
                 contextToReturn = '輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
@@ -95,13 +96,30 @@ class MyBot(ActivityHandler):
                 contextToReturn = f"You said '{ turn_context.activity.text }'"
         elif turn_context.activity.value != None:
             if turn_context.activity.value['card_request_type'] == 'submit_add':
-                # TODO 連接 API
-                contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
-                    turn_context.activity.value['todo_name'],)
+                
+                # TODO 接到正確的API
+                my_data = {'todo_name': turn_context.activity.value['todo_name'], 
+                            'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
+                            'todo_contents': turn_context.activity.value['todo_contents'],
+                            'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
+                            'todo_completed': turn_context.activity.value['todo_completed'],
+                            'employee_id': turn_context.activity.channel_data['tenant']['id'],
+                            "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
+                            "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
+                            }
+
+                # 將資料加入 POST 請求中
+                r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
+                if r.status_code == requests.codes.ok:
+                    contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
+                        turn_context.activity.value['todo_name'],)
+                else: 
+                    print(r.status_code)
+                    print("Error: ", r.content)
+                    contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
+                
             # elif turn_context.activity.value['card_type'] ==
 
-
->>>>>> > b6a51c6315121826177ffd6d1cb2b261c2ac2dd4
         await turn_context.send_activity(contextToReturn)
         print()
 
