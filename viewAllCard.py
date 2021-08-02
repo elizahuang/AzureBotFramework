@@ -184,8 +184,10 @@ def prepareViewAllCardTest():
 #               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
 def prepareViewAllCard(taskInfos):
     cardReturn=copy.deepcopy(viewAllCard)
+
     for task in taskInfos:    
         task_template=copy.deepcopy(singleTask)
+        print('task\n',task)
         task_template[0]["facts"][0]["value"]=task["todo_id"]
         task_template[0]["facts"][1]["value"]=task["todo_name"]
         task_template[0]["facts"][2]["value"]=task["todo_date"]  #task["start_date"]

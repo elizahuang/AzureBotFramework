@@ -9,12 +9,13 @@ presentCard={
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
-            "text": "項目狀態更新",
+            "text": "項目狀態更新如下",
             "wrap": True,
             "horizontalAlignment": "Center"
         },
         {
             "type": "FactSet",
+            "separator": True, 
             "facts": [
                 {
                     "title": "項目 ID",
@@ -33,7 +34,7 @@ presentCard={
                     "value": "xxxtask contentsxxx"  
                 },                        
                 {
-                    "title": "完成",
+                    "title": "已完成",
                     "value": "False"
                 }
             ]

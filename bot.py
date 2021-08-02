@@ -34,6 +34,7 @@ class MyBot(ActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
+        teams_tenantID=turn_context.activity.channel_data['tenant']['id']
         print('turn_context.activity:\n',turn_context.activity)
         if turn_context.activity.text != None:
             # print(turn_context.activity.text)
@@ -83,8 +84,16 @@ class MyBot(ActivityHandler):
                 "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
                 {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
+                # print('teams_tenantID\n',teams_tenantID)
+                tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID))
+                if tasksInfo.status_code == requests.codes.ok:
+                    print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
+                    tasksInfo=json.loads(tasksInfo.content.decode('utf-8'))
+                    print('taskInfos json\n',tasksInfo)
+                    contextToReturn = MessageFactory.attachment(Attachment(
+                        content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
+                else: 
+                    contextToReturn ='目前沒有您的代辦事項，謝謝!!'
             else:
                 contextToReturn = f"You said '{ turn_context.activity.text }'"
         elif turn_context.activity.value != None:
