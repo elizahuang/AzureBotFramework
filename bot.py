@@ -39,7 +39,7 @@ class MyBot(ActivityHandler):
                                         content=copy.deepcopy(addToDoListAdapCard)))
         elif turn_context.activity.value != None and turn_context.activity.value['card_type'] == 'addToDoList':
                 # TODO 連接 API
-                contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
+            contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
             
         elif turn_context.activity.text=='todo':
             contextToReturn=requests.get('https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
