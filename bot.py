@@ -34,8 +34,9 @@ class MyBot(ActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
+        print('turn_context.activity:\n',turn_context.activity)
         if turn_context.activity.text != None:
-            print(turn_context.activity.text)
+            # print(turn_context.activity.text)
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
@@ -81,15 +82,6 @@ class MyBot(ActivityHandler):
                 {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
                 {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}, {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
@@ -130,7 +122,6 @@ class MyBot(ActivityHandler):
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     # call submit出去的API
                     contextToReturn=addOrUpdateResultCard(singletask)# contextToReturn=已新增的card
-
 
         await turn_context.send_activity(contextToReturn)
         print()
