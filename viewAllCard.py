@@ -182,7 +182,7 @@ def prepareViewAllCardTest():
 #               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True},\
 #  {"todo_id":"321321","todo_name":"test2","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
 #               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
-async def prepareViewAllCard(taskInfos):
+def prepareViewAllCard(taskInfos):
     cardReturn=copy.deepcopy(viewAllCard)
     for task in taskInfos:    
         task_template=copy.deepcopy(singleTask)
@@ -198,8 +198,7 @@ async def prepareViewAllCard(taskInfos):
         task_template[1]["columns"][0]["items"][0]["actions"][0]["data"].update(task)
         task_template[1]["columns"][1]["items"][0]["actions"][0]["data"].update(task)
         
-        cardReturn["body"]=cardReturn["body"]+task_template
+        cardReturn["body"]=cardReturn["body"]+task_template      
         
-        
-    return await cardReturn
+    return cardReturn
 

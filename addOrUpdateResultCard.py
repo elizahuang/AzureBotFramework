@@ -41,11 +41,11 @@ presentCard={
     ]
 }
 
-async def addOrUpdateResultCard(singletask):
+def addOrUpdateResultCard(singletask):
     cardToReturn=copy.deepcopy(presentCard)
     cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
     cardToReturn["body"][1]["facts"][1]["value"]=singletask["todo_name"]
     cardToReturn["body"][1]["facts"][2]["value"]=singletask["todo_date"]
     cardToReturn["body"][1]["facts"][3]["value"]=singletask["todo_contents"]
     cardToReturn["body"][1]["facts"][4]["value"]=singletask["todo_completed"]
-    return await cardToReturn
+    return cardToReturn
