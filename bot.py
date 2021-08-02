@@ -9,6 +9,7 @@ import copy
 from updateCard import *
 from viewAllCard import *
 from addTodoCard import *
+from addOrUpdateResultCard import *
 
 
 def create_hero_card() -> Attachment:
@@ -118,12 +119,18 @@ class MyBot(ActivityHandler):
                         print("Error: ", r.content)
                         contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
                 
-                # elif turn_context.activity.value['card_request_type'] == 'submit_update':
-                    # call submit出去的API
+                elif turn_context.activity.value['card_request_type'] == 'update_task':                
+                    data=turn_context.activity.value
+                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
+                    contextToReturn=prepareUpdateCard(singletask)
                 # elif turn_context.activity.value['card_request_type'] == 'delete_task':
-                #     # call 德瑋的function
-                # elif turn_context.activity.value['card_request_type'] == 'update_task':                
-                # # elif turn_context.activity.value['card_type'] ==
+                    # call 德瑋的function
+                elif turn_context.activity.value['card_request_type'] == 'submit_update':
+                    data=turn_context.activity.value
+                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
+                    # call submit出去的API
+                    contextToReturn=addOrUpdateResultCard(singletask)# contextToReturn=已新增的card
+
 
         await turn_context.send_activity(contextToReturn)
         print()
