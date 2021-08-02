@@ -242,7 +242,8 @@ updateCard={
         
     ],
 }
-def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
+async def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30",
+                "start_time":"20:08","end_date":"2021-08-01",
                 "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}):
     cardToReturn=copy.deepcopy(updateCard)    
     # singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
@@ -255,7 +256,7 @@ def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_d
     cardToReturn["body"][12]["value"]="true" if singletask["todo_completed"] else "false"
     cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]
     
-    return cardToReturn
+    return await cardToReturn
 
     
 # prepareUpdateCard()
