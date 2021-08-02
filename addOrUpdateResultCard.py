@@ -9,7 +9,7 @@ presentCard={
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
-            "text": "所有事項",
+            "text": "項目狀態更新",
             "wrap": True,
             "horizontalAlignment": "Center"
         },
@@ -47,5 +47,5 @@ def addOrUpdateResultCard(singletask):
     cardToReturn["body"][1]["facts"][1]["value"]=singletask["todo_name"]
     cardToReturn["body"][1]["facts"][2]["value"]=singletask["todo_date"]
     cardToReturn["body"][1]["facts"][3]["value"]=singletask["todo_contents"]
-    cardToReturn["body"][1]["facts"][4]["value"]=singletask["todo_completed"]
+    cardToReturn["body"][1]["facts"][4]["value"]="True" if singletask["todo_completed"] else "False"
     return cardToReturn

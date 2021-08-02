@@ -115,7 +115,8 @@ class MyBot(ActivityHandler):
                     data=turn_context.activity.value
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
-                    contextToReturn= prepareUpdateCard(singletask)
+                    contextToReturn = MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content=prepareUpdateCard(singletask)))                  
 
                 # elif turn_context.activity.value['card_request_type'] == 'delete_task':
                     # call 德瑋的function
@@ -124,7 +125,9 @@ class MyBot(ActivityHandler):
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     # call submit出去的API
-                    contextToReturn=addOrUpdateResultCard(singletask)# contextToReturn=已新增的card
+                    contextToReturn =MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
+                    await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 更新已送出，祝 工作順心 ~ ')
 
         await turn_context.send_activity(contextToReturn)
         print()

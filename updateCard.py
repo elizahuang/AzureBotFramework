@@ -166,7 +166,7 @@ updateCard={
             "type": "Input.Date",
             "isRequired": True,
             "errorMessage": "Start date for the task is required",
-            "id": "start_date",
+            "id": "todo_date",
             "value": "2021-08-01"
         },
         {
@@ -230,7 +230,7 @@ updateCard={
                             "style": "positive",
                             "data": {
                                 "card_request_type": "submit_update",
-                                "task_id": "12342151"
+                                "todo_id": "12342151"
                             },
                             "id": "update_task_submit",
                             "associatedInputs": "auto"
@@ -253,8 +253,8 @@ def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_d
     cardToReturn["body"][3]["value"]=singletask["todo_name"]
     cardToReturn["body"][5]["value"]=singletask["todo_date"]
     cardToReturn["body"][11]["value"]=singletask["todo_contents"]
-    cardToReturn["body"][12]["value"]="true" if singletask["todo_completed"] else "false"
-    cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]
+    cardToReturn["body"][12]["value"]=True if singletask["todo_completed"] else False
+    cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["todo_id"]=singletask["todo_id"]
     
     return cardToReturn
 
