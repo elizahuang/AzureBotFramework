@@ -62,14 +62,14 @@ class MyBot(ActivityHandler):
                     {"todo_id":"321321","todo_name":"test2","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
                 "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
                 contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCard(tasksInfo)))  
-  
+            else:   
+                contextToReturn=f"You said '{ turn_context.activity.text }'"
         elif turn_context.activity.value != None and turn_context.activity.value['card_type'] == 'addToDoList':
                 # TODO 連接 API
             contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
             
 
-        else:   
-            contextToReturn=f"You said '{ turn_context.activity.text }'"
+
         await turn_context.send_activity(contextToReturn)
         print()
         
