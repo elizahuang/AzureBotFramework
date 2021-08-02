@@ -42,7 +42,7 @@ class MyBot(ActivityHandler):
                 # response
                 contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
             elif turn_context.activity.text == 'help':
-                contextToReturn = '輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
+                contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
             elif turn_context.activity.text == '新增代辦事項':
                 contextToReturn = MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                                         content=copy.deepcopy(addToDoListAdapCard)))
@@ -131,4 +131,4 @@ class MyBot(ActivityHandler):
         for member_added in members_added:
             if member_added.id != turn_context.activity.recipient.id:
                 await turn_context.send_activity("歡迎使用本機器人，請享受你在台積的時光。 \n\n "+
-        "初次使用請輸入您的工號，以方便連結 line 及 web 的服務\n\n 輸入格式(舉例):  工號_120734")
+        "初次使用請輸入您的工號，以方便連結 teams, line 及 web 的服務\n\n 輸入格式(舉例):  工號_120734")
