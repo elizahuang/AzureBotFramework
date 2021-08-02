@@ -25,25 +25,32 @@ singleTask= [{
                     "value": "12342151"
                 },
                 {
-                    "title": "Task Title",
+                    "title": "項目名稱",
                     "value": "making cards"
                 },
                 {
-                    "title": "Start Date",
+                    "title": "日期",
                     "value": "2021-07-31"
                 },
                 {
-                    "title": "Start Time",
-                    "value": "21:00"
+                    "title": "時間",
+                    "value": "21:00",
+                    "isVisible": False
                 },                
                 {
                     "title": "End Date",
-                    "value": "2021-08-01"
+                    "value": "2021-08-01",
+                    "isVisible": False
                 },
                 {
                     "title": "End Time",
-                    "value": "21:00"
-                },                                
+                    "value": "21:00",
+                    "isVisible": False
+                },        
+                {
+                    "title": "項目內容及備註",
+                    "value": "xxxtask contentsxxx"  
+                },                        
                 {
                     "title": "Completed",
                     "value": "False"
@@ -111,11 +118,12 @@ def prepareViewAllCard(taskInfos):
         task_template=copy.deepcopy(singleTask)
         task_template[0]["facts"][0]["value"]=task["todo_id"]
         task_template[0]["facts"][1]["value"]=task["todo_name"]
-        task_template[0]["facts"][2]["value"]=task["start_date"]
-        task_template[0]["facts"][3]["value"]=task["start_time"]      
-        task_template[0]["facts"][4]["value"]=task["end_date"] 
-        task_template[0]["facts"][5]["value"]=task["end_time"]
-        task_template[0]["facts"][6]["value"]=task["todo_completed"]                             
+        task_template[0]["facts"][2]["value"]=task["todo_date"]  #task["start_date"]
+        # task_template[0]["facts"][3]["value"]=task["start_time"]      
+        # task_template[0]["facts"][4]["value"]=task["end_date"] 
+        # task_template[0]["facts"][5]["value"]=task["end_time"]
+        task_template[0]["facts"][6]["value"]=task["todo_contents"]
+        task_template[0]["facts"][7]["value"]=task["todo_completed"]                             
         
         task_template[1]["columns"][0]["items"][0]["actions"][0]["data"].update(task)
         task_template[1]["columns"][1]["items"][0]["actions"][0]["data"].update(task)

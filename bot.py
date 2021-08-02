@@ -61,9 +61,9 @@ class MyBot(ActivityHandler):
         elif turn_context.activity.text=='viewAllTest':
             contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCardTest()))
         elif turn_context.activity.text=='查看代辦事項':
-            tasksInfo=[{"todo_id":"123123","todo_name":"test1","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
+            tasksInfo=[{"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True},\
-                {"todo_id":"321321","todo_name":"test2","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
+                {"todo_id":"321321","todo_name":"test2","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
             contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCard(tasksInfo)))
         else:   
