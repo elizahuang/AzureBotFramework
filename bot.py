@@ -24,10 +24,11 @@ class MyBot(ActivityHandler):
     # See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     contextToReturn=None
     async def on_message_activity(self, turn_context: TurnContext):
-        print((turn_context.activity))
+        print((turn_context.activity.value))
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         if turn_context.activity.text != None:  
+            print(turn_context.activity.value)
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
@@ -37,10 +38,9 @@ class MyBot(ActivityHandler):
             elif turn_context.activity.text=='新增代辦事項':
                 contextToReturn=MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                                         content=copy.deepcopy(addToDoListAdapCard)))
-            elif turn_context.activity.value['card_type'] == 'addToDoList':
+        elif  turn_context.activity.value != None and turn_context.activity.value['card_request_type'] == 'submit_add':
                 # TODO 連接 API
-                contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
-            
+                contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['todo_name'],)      
         elif turn_context.activity.text=='todo':
             contextToReturn=requests.get('https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
         elif turn_context.activity.text=='my_ehr':

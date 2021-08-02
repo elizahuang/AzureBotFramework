@@ -69,43 +69,132 @@ addToDoListAdapCard={
         "type": "AdaptiveCard",
         "body": [
           {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "添加新的代辦事項",
+            "horizontalAlignment": "Center",
+            "wrap": True
+        },
+        # {
+            # "type": "TextBlock",
+            # "text": "Task_ID:  "+"12342151",
+            # "wrap": True,
+            # "id": "show_task_id",
+            # "separator": True,            
+        # },
+        {
+            "type": "TextBlock",
+            "text": "代辦事項",
+            "wrap": True,
+            "id": "task_name_label",
+            "separator": True,
+        },       
+        {
             "type": "Input.Text",
-            "id": "toDoName",
-            "isMultiline": True,
-            "placeholder": "請輸入代辦事項名稱"
-          },
-          {
-            "type": "Input.Text",
-            "id": "toDoContent",
-            "isMultiline": True,
-            "placeholder": "請輸入代辦事項內容"
-          },
-          {
+            "style": "text",
+            "id": "todo_name",
+            "isRequired": True,
+            "errorMessage": "Task name is required",
+            "placeholder": "請輸入代辦事項名稱",
+            "spacing": "Padding"
+        },
+        {
+            "type": "TextBlock",
+            "text": "代辦事項日期與時間",
+            "wrap": True,
+            "id": "task_start_label",
+            "separator": True,
+        },     
+        {
             "type": "Input.Date",
-            "id": "toDoDate",
+            "isRequired": True,
+            "errorMessage": "Start date for the task is required",
+            "id": "start_date",
             "placeholder": "請輸入代辦事項日期"
-          },
-          {
+        },
+        {
             "type": "Input.Time",
-            "id": "toDoTime",
+            "id": "start_time",
             "placeholder": "請輸入代辦事項時間"
-          },
-          {
+        },
+        # {
+            # "type": "TextBlock",
+            # "text": "Task End Date Time",
+            # "wrap": True,
+            # "id": "task_end_label",
+            # "separator": True,
+        # },             
+        # {
+            # "type": "Input.Date",
+            # "isRequired": True,
+            # "errorMessage": "End date for the task is required",
+            # "id": "end_date",
+            # "value": "2021-08-01"
+        # },
+        # {
+            # "type": "Input.Time",
+            # "id": "end_time",
+            # "value": "16:59"
+        # },
+        {
+            "type": "TextBlock",
+            "text": "代辦事項內容",
+            "wrap": True,
+            "id": "task_content_label",
+            "separator": True,
+        },             
+        {
             "type": "Input.Text",
-            "id": "toDoComplete",
-            "placeholder": "請輸入代辦事項完成狀態 True/False"
-          },
+            "style": "text",
+            "isMultiline": True,
+            # "placeholder": "請輸入代辦事項內容",
+            "id": "todo_contents"
+        },
+        {
+            "type": "Input.Toggle",
+            "title": "Task Complete",
+            "value": "false",
+            "id": "todo_completed",
+            "separator": True,
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ActionSet",
+                    "horizontalAlignment": "Center",
+                    "actions": [
+                        {
+                            "type": "Action.Submit",
+                            "title": "Submit",
+                            "style": "positive",
+                            "data": {
+                                "card_request_type": "submit_add",
+                                # "task_id": "12342151"
+                            },
+                            "id": "update_task_submit",
+                            "associatedInputs": "auto"
+                        }
+                    ]
+                }
+            ]
+        }
         ],
-        "actions": [
-          {
-            "type": "Action.Submit",
-            "title": "OK",
-            "data": {
-            "card_type": "addToDoList"
-          }
-          }
-        ]
+        # "actions": [
+          # {
+            # "type": "Action.Submit",
+            # "title": "OK",
+            # "data": {
+            # "card_type": "addToDoList"
+          # }
+          # }
+        # ]
       }
     }
   ]
 }
+
+def prepareAddToDoListAdapCard():
+    cardReturn=copy.deepcopy(addToDoListAdapCard)
+    return cardReturn
