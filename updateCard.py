@@ -242,14 +242,19 @@ updateCard={
         
     ],
 }
-def prepareUpdateCard():
-    cardReturn=copy.deepcopy(updateCard)
-    # {"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
-    #             "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True}
+def prepareUpdateCard(singletask):
+    cardToReturn=copy.deepcopy(updateCard)    
+    singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
+                "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True}
     
+    cardToReturn["body"][1]["text"]="項目_ID:  "+singletask["todo_id"]
+    cardToReturn["body"][3]["value"]=singletask["todo_name"]
+    cardToReturn["body"][5]["value"]=singletask["todo_date"]
+    cardToReturn["body"][11]["value"]=singletask["todo_contents"]
+    cardToReturn["body"][12]["value"]="true" if singletask["todo_completed"] else "false"
+    cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]
     
-    
-    return cardReturn
+    return cardToReturn
 
     
 # prepareUpdateCard()
