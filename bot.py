@@ -95,30 +95,35 @@ class MyBot(ActivityHandler):
             else:
                 contextToReturn = f"You said '{ turn_context.activity.text }'"
         elif turn_context.activity.value != None:
-            if turn_context.activity.value['card_request_type'] == 'submit_add':
-                
-                # TODO 接到正確的API
-                my_data = {'todo_name': turn_context.activity.value['todo_name'], 
-                            'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
-                            'todo_contents': turn_context.activity.value['todo_contents'],
-                            'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
-                            'todo_completed': turn_context.activity.value['todo_completed'],
-                            'employee_id': turn_context.activity.channel_data['tenant']['id'],
-                            "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
-                            "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
-                            }
+            if turn_context.activity.value['card_request_type']!=None:
+                if turn_context.activity.value['card_request_type'] == 'submit_add': 
+                    # TODO 接到正確的API
+                    my_data = {'todo_name': turn_context.activity.value['todo_name'], 
+                                'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
+                                'todo_contents': turn_context.activity.value['todo_contents'],
+                                'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
+                                'todo_completed': turn_context.activity.value['todo_completed'],
+                                'employee_id': turn_context.activity.channel_data['tenant']['id'],
+                                "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
+                                "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
+                                }
 
-                # 將資料加入 POST 請求中
-                r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
-                if r.status_code == requests.codes.ok:
-                    contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
-                        turn_context.activity.value['todo_name'],)
-                else: 
-                    print(r.status_code)
-                    print("Error: ", r.content)
-                    contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
+                    # 將資料加入 POST 請求中
+                    r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
+                    if r.status_code == requests.codes.ok:
+                        contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
+                            turn_context.activity.value['todo_name'],)
+                    else: 
+                        print(r.status_code)
+                        print("Error: ", r.content)
+                        contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
                 
-            # elif turn_context.activity.value['card_type'] ==
+                # elif turn_context.activity.value['card_request_type'] == 'submit_update':
+                    # call submit出去的API
+                # elif turn_context.activity.value['card_request_type'] == 'delete_task':
+                #     # call 德瑋的function
+                # elif turn_context.activity.value['card_request_type'] == 'update_task':                
+                # # elif turn_context.activity.value['card_type'] ==
 
         await turn_context.send_activity(contextToReturn)
         print()

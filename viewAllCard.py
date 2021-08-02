@@ -9,7 +9,7 @@ viewAllCard={
             "type": "TextBlock",
             "size": "Medium",
             "weight": "Bolder",
-            "text": " All Tasks",
+            "text": "所有事項",
             "wrap": True,
             "horizontalAlignment": "Center"
         },
@@ -29,7 +29,7 @@ singleTask= [{
                     "value": "making cards"
                 },
                 {
-                    "title": "日期",
+                    "title": "項目日期",
                     "value": "2021-07-31"
                 },                
                 {
@@ -55,7 +55,7 @@ singleTask= [{
                             "actions": [
                                 {
                                     "type": "Action.Submit",
-                                    "title": "Update Task",
+                                    "title": "更新項目",
                                     "data": {
                                         "card_request_type": "update_task",
                                         "task_id": "12342151"
@@ -74,7 +74,7 @@ singleTask= [{
                             "actions": [
                                 {
                                     "type": "Action.Submit",
-                                    "title": "Delete Task",
+                                    "title": "刪除項目",
                                     "data": {
                                         "card_request_type": "delete_task",
                                         "task_id": "12342151"

@@ -134,7 +134,7 @@ updateCard={
         },
         {
             "type": "TextBlock",
-            "text": "Task_ID:  "+"12342151",
+            "text": "項目_ID:  "+"12342151",
             "wrap": True,
             "id": "show_task_id",
             "separator": True,            
@@ -157,7 +157,7 @@ updateCard={
         },
         {
             "type": "TextBlock",
-            "text": "日期/時間：",
+            "text": "日期：", #/時間
             "wrap": True,
             "id": "task_start_label",
             "separator": True,
@@ -244,6 +244,11 @@ updateCard={
 }
 def prepareUpdateCard():
     cardReturn=copy.deepcopy(updateCard)
+    # {"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
+    #             "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True}
+    
+    
+    
     return cardReturn
 
     
