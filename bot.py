@@ -3,9 +3,10 @@
 
 from botbuilder.core import ActivityHandler, TurnContext,CardFactory,MessageFactory
 from botbuilder.schema import ChannelAccount,HeroCard, CardAction, CardImage,ActionTypes ,Attachment,Activity,ActivityTypes
-import requests,json
+import requests,json,copy
 from updateCard import *
 from viewAllCard import *
+from addTodoCard import *
 
 def create_hero_card() -> Attachment:
     herocard = HeroCard(title="推薦以下兩個選項", 
@@ -26,7 +27,19 @@ class MyBot(ActivityHandler):
         print((turn_context.activity))
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
-        if turn_context.activity.text=='todo':
+        if turn_context.activity.text != None and turn_context.activity.text.startswith("工號_"):
+            # TODO 連接 API
+            # see mongo DB connect mongo db
+            contextToReturn='恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+        elif turn_context.activity.text != None and turn_context.activity.text=='help':
+            contextToReturn='輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
+        elif turn_context.activity.text != None and turn_context.activity.text=='新增代辦事項':
+            contextToReturn=MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
+                                      content=copy.deepcopy(addCard)))
+        elif turn_context.activity.value != None and turn_context.activity.value['card_type'] == 'addToDoList':
+            # TODO 連接 API
+            contextToReturn='你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (turn_context.activity.value['toDoName'],)        
+        elif turn_context.activity.text=='todo':
             contextToReturn=requests.get('https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
         elif turn_context.activity.text=='my_ehr':
             contextToReturn='https://myehr'
@@ -45,7 +58,7 @@ class MyBot(ActivityHandler):
             contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareUpdateCard()))        
         elif turn_context.activity.text=='viewAllTest':
             contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',content=prepareViewAllCardTest()))
-        elif turn_context.activity.text=='檢視代辦事項':
+        elif turn_context.activity.text=='查看代辦事項':
             tasksInfo=[{"todo_id":"123123","todo_name":"test1","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True},\
                 {"todo_id":"321321","todo_name":"test2","start_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",\
@@ -63,4 +76,5 @@ class MyBot(ActivityHandler):
     ):
         for member_added in members_added:
             if member_added.id != turn_context.activity.recipient.id:
-                await turn_context.send_activity("Hello and welcome!")
+                await turn_context.send_activity("歡迎使用本機器人，請享受你在台積的時光。 \n\n "+
+        "初次使用請輸入您的工號，以方便連結 line 及 web 的服務\n\n 輸入格式(舉例):  工號_120734")
