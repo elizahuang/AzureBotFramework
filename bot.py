@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFactory
+from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFactory# get_conversation_reference
 from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, ActionTypes, Attachment, Activity, ActivityTypes
 import requests
 import json
@@ -10,6 +10,8 @@ from updateCard import *
 from viewAllCard import *
 from addTodoCard import *
 from addOrUpdateResultCard import *
+from myEhrCard import *
+from test import testCard
 
 
 def create_hero_card() -> Attachment:
@@ -34,8 +36,19 @@ class MyBot(ActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
-        teams_tenantID=turn_context.activity.channel_data['tenant']['id']
+        conversation_id=TurnContext.get_conversation_reference(turn_context.activity).user.id
+        print('**************get converstion id**************\n',conversation_id)
+        # print(get_conversation_reference(conversation_id))
+        # print('**************get user id**************\n',(turn_context.activity).from.id)
         print('turn_context.activity:\n',turn_context.activity)
+        if ('tenant' in turn_context.activity.channel_data.keys()):
+            teams_tenantID=turn_context.activity.channel_data['tenant']['id']  
+        elif ('source' in turn_context.activity.channel_data.keys()): 
+            teams_tenantID=turn_context.activity.channel_data['source']['userId']
+        else: 
+            teams_tenantID=turn_context.activity.channel_data['clientActivityID']
+        print('teams_tenantID',teams_tenantID)
+        
         if turn_context.activity.text != None:
             # print(turn_context.activity.text)
             if turn_context.activity.text.startswith("工號_"):
@@ -44,7 +57,7 @@ class MyBot(ActivityHandler):
                 employee_id=turn_context.activity.text[3:]
                 data={
                   "employee_id":employee_id,
-                  "user_id":turn_context.activity.channel_data['tenant']['id']
+                  "user_id":teams_tenantID
                 }
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 if result.status_code == requests.codes.ok:
@@ -60,8 +73,10 @@ class MyBot(ActivityHandler):
             elif turn_context.activity.text == 'todo':
                 contextToReturn = requests.get(
                     'https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
-            elif turn_context.activity.text == 'my_ehr':
-                contextToReturn = 'https://myehr'
+            elif turn_context.activity.text == 'tsmc':
+                # contextToReturn = 'https://myehr'
+                contextToReturn = MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard()))         
             elif turn_context.activity.text == 'card':
                 cardAtt = create_hero_card()
                 contextToReturn = MessageFactory.attachment(cardAtt)
@@ -75,7 +90,7 @@ class MyBot(ActivityHandler):
                 # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                 #                           content=adapCard))
                 contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareUpdateCard()))
+                    content_type='application/vnd.microsoft.card.adaptive', content=testCard))
             elif turn_context.activity.text == 'viewAllTest':
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCardTest()))
@@ -144,7 +159,6 @@ class MyBot(ActivityHandler):
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     # call submit出去的API
-
                     requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]),json=singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
@@ -152,6 +166,7 @@ class MyBot(ActivityHandler):
 
         await turn_context.send_activity(contextToReturn)
         print()
+
 
     async def on_members_added_activity(
         self,
