@@ -40,17 +40,18 @@ card={
                                             "style": "positive"
                                         }
                                     ],
-                                    "height": "stretch"
+                                    "height": "stretch",
+                                    "wrap":True
                                 }
                             ],
-                            "style": "accent",
+                            "style": "default",
                             "height": "stretch",
                             "verticalContentAlignment": "Center",
-                            "width": 35,
+                            "width": 30,
                         },
                         {
                             "type": "Column",
-                            "width": 65,
+                            "width": 70,
                             "items": [
                                 {
                                     "type": "TextBlock",
@@ -68,7 +69,7 @@ card={
                     "columns": [
                         {
                             "type": "Column",
-                            "width": 35,
+                            "width": 30,
                             "items": [
                                 {
                                     "type": "ActionSet",
@@ -80,16 +81,17 @@ card={
                                             "style": "positive"
                                         }
                                     ],
-                                    "height": "stretch"
+                                    "height": "stretch",
+                                    "wrap":True
                                 }
                             ],
-                            "style": "accent",
+                            "style": "default",
                             "height": "stretch",
                             "verticalContentAlignment": "Center"
                         },
                         {
                             "type": "Column",
-                            "width": 65,
+                            "width": 70,
                             "items": [
                                 {
                                     "type": "TextBlock",
