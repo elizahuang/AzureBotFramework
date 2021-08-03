@@ -45,11 +45,12 @@ card={
                             ],
                             "style": "accent",
                             "height": "stretch",
-                            "verticalContentAlignment": "Center"
+                            "verticalContentAlignment": "Center",
+                            "width": 35,
                         },
                         {
                             "type": "Column",
-                            "width": "stretch",
+                            "width": 65,
                             "items": [
                                 {
                                     "type": "TextBlock",
@@ -67,7 +68,7 @@ card={
                     "columns": [
                         {
                             "type": "Column",
-                            "width": "stretch",
+                            "width": 35,
                             "items": [
                                 {
                                     "type": "ActionSet",
@@ -88,7 +89,7 @@ card={
                         },
                         {
                             "type": "Column",
-                            "width": "stretch",
+                            "width": 65,
                             "items": [
                                 {
                                     "type": "TextBlock",
@@ -108,87 +109,6 @@ card={
     ]
 }
 
-
-
-card_old={
-    "type": "AdaptiveCard",
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.3",
-    "body": [
-        {
-            "type": "TextBlock",
-            "size": "Medium",
-            "weight": "Bolder",
-            "text": "My Ehr 快捷儀表板",
-            "horizontalAlignment": "Center",
-            "height": "stretch",
-            "separator": True,
-            "spacing": "Medium"
-        }
-    ],
-    "actions": [
-        {
-            "type": "Action.ShowCard",
-            "title": "類別一",
-            "card": {
-                "type": "AdaptiveCard",
-                "actions": [
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://www.google.com/"
-                    },
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://tw.yahoo.com/"
-                    }
-                ]
-            },
-            "style": "positive"
-        },
-        {
-            "type": "Action.ShowCard",
-            "title": "類別二",
-            "card": {
-                "type": "AdaptiveCard",
-                "actions": [
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://www.google.com/"
-                    },
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://tw.yahoo.com/"
-                    }
-                ]
-            },
-            "style": "positive"
-        },
-        {
-            "type": "Action.ShowCard",
-            "title": "類別三",
-            "card": {
-                "type": "AdaptiveCard",
-                "actions": [
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://www.google.com/"
-                    },
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "View",
-                        "url": "https://tw.yahoo.com/"
-                    }
-                ]
-            },
-            "style": "positive"
-        }
-    ]
-}
 
 def prepareEhrCard():
     infos=[{"name": "Google","url":"https://www.google.com/","category":"cat 1", "description":"description,description,description,description,description,description"},
