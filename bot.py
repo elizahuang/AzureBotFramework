@@ -62,7 +62,7 @@ class MyBot(ActivityHandler):
             elif turn_context.activity.text == 'todo':
                 contextToReturn = requests.get(
                     'https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
-            elif turn_context.activity.text == 'my_ehr':
+            elif turn_context.activity.text == 'tsmc':
                 # contextToReturn = 'https://myehr'
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard()))         
