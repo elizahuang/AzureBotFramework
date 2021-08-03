@@ -111,6 +111,78 @@ card={
     ]
 }
 
+emptycard={
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "My Ehr 快捷儀表板",
+            "horizontalAlignment": "Center",
+            "height": "stretch",
+            "separator": True,
+            "spacing": "Medium"
+        }
+    ],
+    "actions": [] #put actions
+}
+
+showCardAction= {
+            "type": "Action.ShowCard",
+            "title": "類別一",
+            "card": {
+                "type": "AdaptiveCard",
+                "version": "1.3",
+                "body": [] #put single url btn and description
+            },
+            "style": "default"
+        }
+
+columnSet= {
+        "type": "ColumnSet",
+        "columns": [
+            {
+                "type": "Column",
+                "width": "stretch",
+                "items": [
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.OpenUrl",
+                                "title": "Google1",
+                                "url": "https://www.google.com/",
+                                "style": "positive"
+                            }
+                        ],
+                        "height": "stretch",
+                        "wrap":True
+                    }
+                ],
+                "style": "default",
+                "height": "stretch",
+                "verticalContentAlignment": "Center",
+                "width": 30,
+            },
+            {
+                "type": "Column",
+                "width": 70,
+                "items": [
+                    {
+                        "type": "TextBlock",
+                        "text": "description,description,description,description,description,description,description,description,description,description",
+                        "wrap": True
+                    }
+                ]
+            }                        
+        ],
+        "height": "stretch",
+        "separator": True
+        }
+
 
 def prepareEhrCard():
     infos=[{"name": "Google","url":"https://www.google.com/","category":"cat 1", "description":"description,description,description,description,description,description"},
@@ -126,7 +198,9 @@ def prepareEhrCard():
         sortedInfoDict[category]=sortedInfoDict[category]+[info] if category in sortedInfoDict.keys() else [info]
 
     print('sortedInfoDict\n',sortedInfoDict)  
+    # myEhrCard=copy.deepcopy(card)
+    myEhrCard=copy.deepcopy(emptycard)
+    
 
 
-    myEhrCard=copy.deepcopy(card)
     return myEhrCard
