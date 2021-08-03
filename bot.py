@@ -111,8 +111,8 @@ class MyBot(ActivityHandler):
                     my_data = {'todo_name': turn_context.activity.value['todo_name'], 
                                 'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
                                 'todo_contents': turn_context.activity.value['todo_contents'],
-                                'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 'todo_completed': turn_context.activity.value['todo_completed'],
+                                'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 'user_id': turn_context.activity.channel_data['tenant']['id'],
                                 }
                                 # 'employee_id': turn_context.activity.channel_data['tenant']['id'],
@@ -120,8 +120,8 @@ class MyBot(ActivityHandler):
                                 # "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
 
                     # 將資料加入 POST 請求中
-                    # r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
-                    r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
+                    r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
+                    # r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
                     if r.status_code == requests.codes.ok:
                         contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
                             turn_context.activity.value['todo_name'],)
@@ -144,6 +144,8 @@ class MyBot(ActivityHandler):
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     # call submit出去的API
+
+                    requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["oldname"]))
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
                     await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 更新已送出，祝 工作順心 ~ ')

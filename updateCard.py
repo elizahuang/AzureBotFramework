@@ -106,7 +106,8 @@ updateCard_oldver={
                             "style": "positive",
                             "data": {
                                 "card_request_type": "submit_update",
-                                "task_id": "12342151"
+                                "task_id": "12342151",
+                                "old_name":" "
                             },
                             "id": "update_task_submit",
                             "associatedInputs": "auto"
@@ -230,7 +231,8 @@ updateCard={
                             "style": "positive",
                             "data": {
                                 "card_request_type": "submit_update",
-                                "todo_id": "12342151"
+                                "todo_id": "12342151",
+                                "old_name":" "
                             },
                             "id": "update_task_submit",
                             "associatedInputs": "auto"
@@ -255,6 +257,7 @@ def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_d
     cardToReturn["body"][11]["value"]=singletask["todo_contents"]
     cardToReturn["body"][12]["value"]=True if singletask["todo_completed"] else False
     cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["todo_id"]=singletask["todo_id"]
+    # cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["old_name"]=singletask["todo_id"]
     
     return cardToReturn
 
