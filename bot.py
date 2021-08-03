@@ -9,6 +9,7 @@ import copy
 from updateCard import *
 from viewAllCard import *
 from addTodoCard import *
+from addOrUpdateResultCard import *
 
 
 def create_hero_card() -> Attachment:
@@ -33,14 +34,24 @@ class MyBot(ActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
+        teams_tenantID=turn_context.activity.channel_data['tenant']['id']
+        print('turn_context.activity:\n',turn_context.activity)
         if turn_context.activity.text != None:
-            print(turn_context.activity.text)
+            # print(turn_context.activity.text)
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
-                
+                employee_id=turn_context.activity.text[3:]
+                data={
+                  "employee_id":employee_id,
+                  "user_id":turn_context.activity.channel_data['tenant']['id']
+                }
+                result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
+                if result.status_code == requests.codes.ok:
                 # response
-                contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+                else: 
+                  contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
             elif turn_context.activity.text == 'help':
                 contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
             elif turn_context.activity.text == '新增代辦事項':
@@ -69,56 +80,75 @@ class MyBot(ActivityHandler):
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCardTest()))
             elif turn_context.activity.text == '查看代辦事項':
-                tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
-                    {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}, {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
+                # tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
+                #     {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
+                # print('teams_tenantID\n',teams_tenantID)
+                tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID))
+                if tasksInfo.status_code == requests.codes.ok:
+                    print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
+                    tasksInfo=json.loads(tasksInfo.content.decode('utf-8'))
+                    print('taskInfos json\n',tasksInfo)
+                    contextToReturn = MessageFactory.attachment(Attachment(
+                        content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
+                else: 
+                    contextToReturn ='目前沒有您的代辦事項，謝謝!!'
             else:
                 contextToReturn = f"You said '{ turn_context.activity.text }'"
         elif turn_context.activity.value != None:
-            if turn_context.activity.value['card_request_type'] == 'submit_add':
-                
-                # TODO 接到正確的API
-                my_data = {'todo_name': turn_context.activity.value['todo_name'], 
-                            'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
-                            'todo_contents': turn_context.activity.value['todo_contents'],
-                            'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
-                            'todo_completed': turn_context.activity.value['todo_completed'],
-                            'employee_id': turn_context.activity.channel_data['tenant']['id'],
-                            "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
-                            "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
-                            }
+            if turn_context.activity.value['card_request_type']!=None:
+                if turn_context.activity.value['card_request_type'] == 'submit_add': 
+                    # TODO 接到正確的API
+                    my_data = {'todo_name': turn_context.activity.value['todo_name'], 
+                                'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
+                                'todo_contents': turn_context.activity.value['todo_contents'],
+                                'todo_completed': turn_context.activity.value['todo_completed'],
+                                'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
+                                # 'employee_id': '120734'#turn_context.activity.channel_data['tenant']['id'],
+                                }
+                                # 'employee_id': turn_context.activity.channel_data['tenant']['id'],
+                                # "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
+                                # "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
 
-                # 將資料加入 POST 請求中
-                r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
-                if r.status_code == requests.codes.ok:
-                    contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
-                        turn_context.activity.value['todo_name'],)
-                else: 
-                    print(r.status_code)
-                    print("Error: ", r.content)
-                    contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
+                    # 將資料加入 POST 請求中
+                    r = requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID), data = json.dumps(my_data))
+                    # r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
+                    if r.status_code == requests.codes.ok:
+                        contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
+                            turn_context.activity.value['todo_name'],)
+                    else: 
+                        print(r.status_code)
+                        print("Error: ", r.content)
+                        contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
                 
-            # elif turn_context.activity.value['card_type'] ==
+                elif turn_context.activity.value['card_request_type'] == 'update_task':                
+                    data=turn_context.activity.value
+                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
+                    print('singletask:\n',singletask)
+                    contextToReturn = MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content=prepareUpdateCard(singletask)))                  
+
+                # elif turn_context.activity.value['card_request_type'] == 'delete_task':
+                    # call 德瑋的function
+                elif turn_context.activity.value['card_request_type'] == 'submit_update':
+                    data=turn_context.activity.value
+                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
+                    print('singletask:\n',singletask)
+                    # call submit出去的API
+
+                    requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]),json=singletask)
+                    contextToReturn =MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
+                    await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 更新已送出，祝 工作順心 ~ ')
 
         await turn_context.send_activity(contextToReturn)
         print()

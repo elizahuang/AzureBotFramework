@@ -106,7 +106,8 @@ updateCard_oldver={
                             "style": "positive",
                             "data": {
                                 "card_request_type": "submit_update",
-                                "task_id": "12342151"
+                                "task_id": "12342151",
+                                "old_name":" "
                             },
                             "id": "update_task_submit",
                             "associatedInputs": "auto"
@@ -134,7 +135,7 @@ updateCard={
         },
         {
             "type": "TextBlock",
-            "text": "Task_ID:  "+"12342151",
+            "text": "項目_ID:  "+"12342151",
             "wrap": True,
             "id": "show_task_id",
             "separator": True,            
@@ -157,7 +158,7 @@ updateCard={
         },
         {
             "type": "TextBlock",
-            "text": "日期/時間：",
+            "text": "日期：", #/時間
             "wrap": True,
             "id": "task_start_label",
             "separator": True,
@@ -166,7 +167,7 @@ updateCard={
             "type": "Input.Date",
             "isRequired": True,
             "errorMessage": "Start date for the task is required",
-            "id": "start_date",
+            "id": "todo_date",
             "value": "2021-08-01"
         },
         {
@@ -230,7 +231,8 @@ updateCard={
                             "style": "positive",
                             "data": {
                                 "card_request_type": "submit_update",
-                                "task_id": "12342151"
+                                "todo_id": "12342151",
+                                "old_name":" "
                             },
                             "id": "update_task_submit",
                             "associatedInputs": "auto"
@@ -242,9 +244,22 @@ updateCard={
         
     ],
 }
-def prepareUpdateCard():
-    cardReturn=copy.deepcopy(updateCard)
-    return cardReturn
+def prepareUpdateCard(singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30",
+                "start_time":"20:08","end_date":"2021-08-01",
+                "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}):
+    cardToReturn=copy.deepcopy(updateCard)    
+    # singletask={"todo_id":"123123","todo_name":"test1","todo_date":"2021-07-30","start_time":"20:08","end_date":"2021-08-01",
+    #             "end_time":"12:00","todo_contents":"contents,contents","todo_completed":True}
+    
+    cardToReturn["body"][1]["text"]="項目_ID:  "+singletask["todo_id"]
+    cardToReturn["body"][3]["value"]=singletask["todo_name"]
+    cardToReturn["body"][5]["value"]=singletask["todo_date"]
+    cardToReturn["body"][11]["value"]=singletask["todo_contents"]
+    cardToReturn["body"][12]["value"]=True if singletask["todo_completed"] else False
+    cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["todo_id"]=singletask["todo_id"]
+    # cardToReturn["body"][13]["items"][0]["actions"][0]["data"]["old_name"]=singletask["todo_id"]
+    
+    return cardToReturn
 
     
 # prepareUpdateCard()
