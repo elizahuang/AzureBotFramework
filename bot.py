@@ -113,6 +113,7 @@ class MyBot(ActivityHandler):
                                 'todo_contents': turn_context.activity.value['todo_contents'],
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 'todo_completed': turn_context.activity.value['todo_completed'],
+                                'user_id': turn_context.activity.channel_data['tenant']['id'],
                                 }
                                 # 'employee_id': turn_context.activity.channel_data['tenant']['id'],
                                 # "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
