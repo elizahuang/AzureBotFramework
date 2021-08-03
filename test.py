@@ -1,4 +1,5 @@
 import requests,json
+from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFactory
 # result=requests.get('https://tsmcbot-404notfound.du.r.appspot.com/api/myehr').content
 # print(result)
 
@@ -28,7 +29,13 @@ access_token=response['access_token']
 # print('JWT token response:\n',response2)
 
 
-# conversationId=
-# url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversationId)
+conversationId='29:1htJmKwuNtPEggpMm5kJ73ht47oIbddUOeEh1r1DFpf7vJmh83_C7Q3sBnFcxS3EJv5hHqcu0Po3_-dMmfqnMfA'
+url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversationId)
 header={'Authorization': 'Bearer ' + access_token}
 response2=json.loads(r.content.decode('utf-8'))
+
+MessageFactory.text(
+                        "Welcome to CardBot. "
+                        + "This bot will show you different types of Rich Cards. "
+                        + "Please type anything to get started."
+                    )
