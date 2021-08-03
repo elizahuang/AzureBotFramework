@@ -127,7 +127,7 @@ emptycard={
             "spacing": "Medium"
         }
     ],
-    "actions": [] #put actions
+    "actions": [] #put actions  #one show card action for one category
 }
 
 showCardAction= {
@@ -201,6 +201,14 @@ def prepareEhrCard():
     # myEhrCard=copy.deepcopy(card)
     myEhrCard=copy.deepcopy(emptycard)
     
-
-
+    for singleCategory, urlinfos in sortedInfoDict.items():
+        singleShowCard=copy.deepcopy(showCardAction)
+        singleShowCard["title"]=singleCategory
+        for singleUrl in urlinfos:
+            columnSetSingleUrl=copy.deepcopy(columnSet)
+            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["title"]=singleUrl["name"]
+            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["url"]=singleUrl["url"]
+            columnSetSingleUrl["columns"][1]["items"][0]["text"]=singleUrl["description"]
+            singleShowCard["card"]["body"]+=[columnSetSingleUrl]
+        myEhrCard["actions"]+=[singleShowCard]
     return myEhrCard
