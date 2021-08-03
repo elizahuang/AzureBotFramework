@@ -41,9 +41,17 @@ class MyBot(ActivityHandler):
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
-                
+                employee_id=turn_context.activity.text[3:]
+                data={
+                  "employee_id":employee_id,
+                  "user_id":turn_context.activity.channel_data['tenant']['id']
+                }
+                result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
+                if result.status_code == requests.codes.ok:
                 # response
-                contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+                else: 
+                  contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
             elif turn_context.activity.text == 'help':
                 contextToReturn = '輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
             elif turn_context.activity.text == '新增代辦事項':
@@ -72,18 +80,18 @@ class MyBot(ActivityHandler):
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCardTest()))
             elif turn_context.activity.text == '查看代辦事項':
-                tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
-                    {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
+                # tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
+                #     {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
+                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
+                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
                 # print('teams_tenantID\n',teams_tenantID)
                 tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID))
                 if tasksInfo.status_code == requests.codes.ok:
@@ -106,9 +114,9 @@ class MyBot(ActivityHandler):
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 'todo_completed': turn_context.activity.value['todo_completed'],
                                 'employee_id': turn_context.activity.channel_data['tenant']['id'],
-                                "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
-                                "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
                                 }
+                                # "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
+                                # "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
 
                     # 將資料加入 POST 請求中
                     r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', data = json.dumps(my_data))
