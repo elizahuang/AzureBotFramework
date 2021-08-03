@@ -50,7 +50,6 @@ class MyBot(ActivityHandler):
         print('teams_tenantID',teams_tenantID)
         
         if turn_context.activity.text != None:
-            # print(turn_context.activity.text)
             if turn_context.activity.text.startswith("工號_"):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
@@ -74,7 +73,6 @@ class MyBot(ActivityHandler):
                 contextToReturn = requests.get(
                     'https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
             elif turn_context.activity.text == 'tsmc':
-                # contextToReturn = 'https://myehr'
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard()))         
             elif turn_context.activity.text == 'card':
@@ -100,19 +98,12 @@ class MyBot(ActivityHandler):
                 #     {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
                 # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
                 # print('teams_tenantID\n',teams_tenantID)
                 tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID))
                 if tasksInfo.status_code == requests.codes.ok:
-                    print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
+                    # print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
                     tasksInfo=json.loads(tasksInfo.content.decode('utf-8'))
-                    print('taskInfos json\n',tasksInfo)
                     contextToReturn = MessageFactory.attachment(Attachment(
                         content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
                 else: 
@@ -136,7 +127,6 @@ class MyBot(ActivityHandler):
 
                     # 將資料加入 POST 請求中
                     r = requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID), data = json.dumps(my_data))
-                    # r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
                     if r.status_code == requests.codes.ok:
                         contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
                             turn_context.activity.value['todo_name'],)
