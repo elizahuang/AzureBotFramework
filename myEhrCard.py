@@ -138,8 +138,7 @@ showCardAction= {
                 "version": "1.3",
                 "body": [] #put single url btn and description
             },
-            "style": "default",
-            "separator": True
+            "style": "default"
         }
 
 columnSet= {
