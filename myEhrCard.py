@@ -190,7 +190,7 @@ card_old={
     ]
 }
 
-def prepareEhrCard(infos):
+def prepareEhrCard():
     infos=[{"name": "Google","url":"https://www.google.com/","category":"cat 1", "description":"description,description,description,description,description,description"},
     {"name": "Google2","url":"https://www.google.com/","category":"cat 2", "description":"description,description,description,description,description,description"},
     {"name": "Google2","url":"https://www.google.com/","category":"cat 2", "description":"description,description,description,description,description,description"},
