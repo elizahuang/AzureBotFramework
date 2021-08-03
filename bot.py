@@ -11,6 +11,7 @@ from viewAllCard import *
 from addTodoCard import *
 from addOrUpdateResultCard import *
 from myEhrCard import *
+from deleteCard import *
 from test import testCard
 
 
@@ -143,8 +144,19 @@ class MyBot(ActivityHandler):
                     contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareUpdateCard(singletask)))                  
 
-                # elif turn_context.activity.value['card_request_type'] == 'delete_task':
-                    # call 德瑋的function
+                elif turn_context.activity.value['card_request_type'] == 'delete_task':                    
+                    data=turn_context.activity.value
+                    singletask ={"todo_id":data["todo_id"]}
+                    print('singletask:\n',singletask)
+                    contextToReturn =MessageFactory.attachment(Attachment(
+                    content_type='application/vnd.microsoft.card.adaptive', content= deleteCard( singletask ) ))
+
+                    if turn_context.activity.value =='delete_task':
+                        requests.delete(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]),json=singletask)
+                        await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料成功刪除 ~ ')
+                    else:
+                        turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料未刪除 ~ ')
+                        
                 elif turn_context.activity.value['card_request_type'] == 'submit_update':
                     data=turn_context.activity.value
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
