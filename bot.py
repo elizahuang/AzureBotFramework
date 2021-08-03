@@ -36,7 +36,7 @@ class MyBot(ActivityHandler):
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         print('**************get converstion id**************\n',TurnContext.get_conversation_reference(turn_context.activity).user.id)
-        print('**************get user id**************\n',(turn_context.activity).from.id)
+        # print('**************get user id**************\n',(turn_context.activity).from.id)
         teams_tenantID=turn_context.activity.channel_data['tenant']['id']
         print('turn_context.activity:\n',turn_context.activity)
         if turn_context.activity.text != None:
