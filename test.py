@@ -29,13 +29,33 @@ access_token=response['access_token']
 # print('JWT token response:\n',response2)
 
 
-conversationId='29:1htJmKwuNtPEggpMm5kJ73ht47oIbddUOeEh1r1DFpf7vJmh83_C7Q3sBnFcxS3EJv5hHqcu0Po3_-dMmfqnMfA'
-url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversationId)
-header={'Authorization': 'Bearer ' + access_token}
+# conversationId='29:1htJmKwuNtPEggpMm5kJ73ht47oIbddUOeEh1r1DFpf7vJmh83_C7Q3sBnFcxS3EJv5hHqcu0Po3_-dMmfqnMfA'
+conversationId='29:1lNWDIz8Jn0YgoFx8LTJWrkqchAJb1Vg0bJK-PvHxe2FHzNXzFHYaeA0P9j58qQyPVVUCKUfpbZlBNcepHMaajg'
+header={'Authorization': 'Bearer ' + access_token, 'content-type':'application/json'}
+url=f'https://smba.trafficmanager.net/apac/v3/conversations'
+payload={
+    "bot": {
+        "id": "30eba4f2-6e15-458b-9fdf-f8bbf25efb4f",
+        "name": "AzureBot001_Regis"
+    },
+    "isGroup": False,
+    "members": [
+        {
+            "id": "010281b3-d5d6-4bc8-b561-bf4794b97036",#010281b3-d5d6-4bc8-b561-bf4794b97036
+            "name": "黃懿"
+        }
+    ],
+    "topicName": "Testing proactive msg"
+}
+r = requests.post(url,json=(payload), headers=headers)
 response2=json.loads(r.content.decode('utf-8'))
+print('conversationId:\n',response2)
 
-MessageFactory.text(
-                        "Welcome to CardBot. "
-                        + "This bot will show you different types of Rich Cards. "
-                        + "Please type anything to get started."
-                    )
+# url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversationId)
+# MessageFactory.text(
+#                         "Welcome to CardBot. "
+#                         + "This bot will show you different types of Rich Cards. "
+#                         + "Please type anything to get started."
+#                     )
+# r = requests.post(url, data=(payload), headers=headers)
+# response3=json.loads(r.content.decode('utf-8'))
