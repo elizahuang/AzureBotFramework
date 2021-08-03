@@ -61,14 +61,10 @@ class MyBot(ActivityHandler):
             elif turn_context.activity.text == 'todo':
                 contextToReturn = requests.get(
                     'https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
-            elif turn_context.activity.text == 'my_ehr1':
+            elif turn_context.activity.text == 'my_ehr':
                 # contextToReturn = 'https://myehr'
                 contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard(1)))
-            elif turn_context.activity.text == 'my_ehr2':
-                # contextToReturn = 'https://myehr'
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard(2)))            
+                    content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard()))         
             elif turn_context.activity.text == 'card':
                 cardAtt = create_hero_card()
                 contextToReturn = MessageFactory.attachment(cardAtt)
