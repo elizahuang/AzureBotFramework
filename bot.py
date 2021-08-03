@@ -112,7 +112,7 @@ class MyBot(ActivityHandler):
                                 'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
                                 'todo_contents': turn_context.activity.value['todo_contents'],
                                 'todo_completed': turn_context.activity.value['todo_completed'],
-                                'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
+                                # 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 'employee_id': '120734'#turn_context.activity.channel_data['tenant']['id'],
                                 }
                                 # 'employee_id': turn_context.activity.channel_data['tenant']['id'],
@@ -120,8 +120,8 @@ class MyBot(ActivityHandler):
                                 # "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
 
                     # 將資料加入 POST 請求中
-                    r = requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID), data = json.dumps(my_data))
-                    # r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
+                    # r = requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID), data = json.dumps(my_data))
+                    r = requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/todo/', json= (my_data))
                     if r.status_code == requests.codes.ok:
                         contextToReturn = '你已成功新增 %s 至代辦事項，下一步您可以透過查詢代辦事項來查看您的清單。' % (
                             turn_context.activity.value['todo_name'],)
