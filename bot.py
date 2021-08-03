@@ -122,6 +122,7 @@ class MyBot(ActivityHandler):
         elif turn_context.activity.value != None:
             if turn_context.activity.value['card_request_type']!=None:
                 if turn_context.activity.value['card_request_type'] == 'submit_add': 
+                    print(type(turn_context.activity.value['start_time']))
                     # TODO 接到正確的API
                     my_data = {'todo_name': turn_context.activity.value['todo_name'], 
                                 'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
