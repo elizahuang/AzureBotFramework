@@ -1,4 +1,4 @@
-import copy
+import copy,requests,json
 card={
     "type": "AdaptiveCard",
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
@@ -190,7 +190,8 @@ def prepareEhrCard():
     {"name": "Google2","url":"https://www.google.com/","category":"cat 2", "description":"description,description,description,description,description,description"},
     {"name": "Google2","url":"https://www.google.com/","category":"cat 2", "description":"description,description,description,description,description,description"},
     {"name": "Google3","url":"https://www.google.com/","category":"cat 3", "description":"description,description,description,description,description,description"}    ]
-        
+    infos=json.loads(requests.get('https://tsmcbot-404notfound.du.r.appspot.com/api/myehr').content)
+    print('result:\n',infos)    
     sortedInfoDict={}
     for info in infos:
         category=info["category"]

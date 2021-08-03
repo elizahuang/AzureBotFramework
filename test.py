@@ -59,3 +59,27 @@ print('conversationId:\n',response2)
 #                     )
 # r = requests.post(url, data=(payload), headers=headers)
 # response3=json.loads(r.content.decode('utf-8'))
+
+
+testCard={
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        {
+            "type": "Input.ChoiceSet",
+            "choices": [
+                {
+                    "title": "1",
+                    "value": "1"
+                },
+                {
+                    "title": "2",
+                    "value": "2"
+                }
+            ],
+            "placeholder": "小時",
+            "id": "1233"
+        }
+    ]
+}
