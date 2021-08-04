@@ -37,6 +37,7 @@ class MyBot(ActivityHandler):
     contextToReturn = None
 
     async def on_message_activity(self, turn_context: TurnContext):
+        print('turn_context.activity:\n',turn_context.activity)
         paged_members = []
         continuation_token = None       
         while True:
@@ -52,31 +53,27 @@ class MyBot(ActivityHandler):
             print('paged_members:  ',m.as_dict())
         print()
         
-        try:
-            member = await TeamsInfo.get_member(
-                turn_context, turn_context.activity.from_property.id
-            )
-        except Exception as e:
-            if "MemberNotFoundInConversation" in e.args[0]:
-                await turn_context.send_activity("Member not found.")
-            else:
-                raise
-        else:
-            print('member: ',member)
-        print()
+        # try:
+        #     member = await TeamsInfo.get_member(
+        #         turn_context, turn_context.activity.from_property.id
+        #     )
+        # except Exception as e:
+        #     if "MemberNotFoundInConversation" in e.args[0]:
+        #         await turn_context.send_activity("Member not found.")
+        #     else:
+        #         raise
+        # else:
+        #     print('member: ',member)
+        # print()
         
-        # print('BotState get:\n')
-        # [print(s) for s in BotState.get(turn_context=turn_context)] 
-
-            # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         userid=TurnContext.get_conversation_reference(turn_context.activity).user.id
-        print('**************get converstion id**************\n',userid)
+        print('**************get userid**************\n',userid)
         # print(get_conversation_reference(conversation_id))
         # print('**************get user id**************\n',(turn_context.activity).from.id)
-        print('turn_context.activity:\n',turn_context.activity)
+
         if ('tenant' in turn_context.activity.channel_data.keys()):
-            teams_tenantID=turn_context.activity.channel_data['tenant']['id']  
+            userid=TurnContext.get_conversation_reference(turn_context.activity).user.id 
         elif ('source' in turn_context.activity.channel_data.keys()): 
             teams_tenantID=turn_context.activity.channel_data['source']['userId']
         else: 
