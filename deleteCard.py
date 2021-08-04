@@ -75,6 +75,8 @@ deleteCard={
 def deleteCard(singletask):
     cardToReturn=copy.deepcopy(deleteCard)
     print('**********singletask**********: ', singletask)
+    print('**********singletask**********: ', type(singletask))
+    print('cardToReturn["body"][1]["facts"][0]["value"]:    ',cardToReturn["body"][1]["facts"][0]["value"])
     cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
 
     # cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"].update(singletask)
