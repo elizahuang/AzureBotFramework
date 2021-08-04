@@ -106,8 +106,10 @@ class MyBot(ActivityHandler):
                 if turn_context.activity.value['card_request_type'] == 'submit_add': 
                     print(type(turn_context.activity.value['start_time']))
                     # TODO 接到正確的API
+                    todoDate = turn_context.activity.value['start_date'] + " " + turn_context.activity.value['start_time']
+                    print(todoDate)
                     my_data = {'todo_name': turn_context.activity.value['todo_name'], 
-                                'todo_date': turn_context.activity.value['start_date'].replace("-","/"),
+                                'todo_date': todoDate,
                                 'todo_contents': turn_context.activity.value['todo_contents'],
                                 'todo_completed': turn_context.activity.value['todo_completed'],
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
