@@ -161,7 +161,7 @@ class MyBot(ActivityHandler):
                     requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]),json=singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
-                    await turn_context.send_activity('Todo List 項目ID: '+data["todo_id"]+' 更新已送出，祝 工作順心 ~ ')
+                    await turn_context.send_activity('Todo List 項目名稱＂'+data["todo_name"]+'＂已更新送出，祝 工作順心 ~ ')
 
         await turn_context.send_activity(contextToReturn)
         print()
