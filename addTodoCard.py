@@ -1,3 +1,9 @@
+import os, base64
+file = os.path.join(os.getcwd(), "winnie.jpg")
+image = open(file, 'rb')
+image_read = image.read()
+image_64_encode = base64.b64encode(image_read).decode()
+
 addToDoListAdapCard={
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
@@ -21,7 +27,7 @@ addToDoListAdapCard={
               "items": [
                 {
                   "type": "Image",
-                  "url": "https://img.ltn.com.tw/Upload/ent/page/800/2015/11/06/1500206_1.jpg",
+                  "url": f"data:image/jpg;base64,{image_64_encode}",#"https://img.ltn.com.tw/Upload/ent/page/800/2015/11/06/1500206_1.jpg",
                   "size": "small",
                   "style": "person"
                 }
