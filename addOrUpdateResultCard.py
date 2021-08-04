@@ -26,7 +26,7 @@ presentCard={
                     "value": "making cards"
                 },
                 {
-                    "title": "項目日期",
+                    "title": "日期時間",
                     "value": "2021-07-31"
                 },                
                 {

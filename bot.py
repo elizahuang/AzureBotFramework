@@ -62,7 +62,7 @@ class MyBot(ActivityHandler):
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 if result.status_code == requests.codes.ok:
                 # response
-                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看ToDoList"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url'
+                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n s輸入"新增代辦事項"，來新增TodoList\n\n  輸入"tsmc"，查看網頁的url'
                 else: 
                   contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
             elif turn_context.activity.text == 'help':
@@ -140,7 +140,7 @@ class MyBot(ActivityHandler):
                 elif turn_context.activity.value['card_request_type'] == 'update_task':                
                     data=turn_context.activity.value
                     print('data:\n',data)
-                    data["todo_date"]='2021-08-04 18:00'
+                    # data["todo_date"]='2021-08-04 18:00'
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"][:10],"start_time":data["todo_date"][11:],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     contextToReturn = MessageFactory.attachment(Attachment(
