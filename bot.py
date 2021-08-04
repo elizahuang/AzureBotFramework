@@ -151,11 +151,14 @@ class MyBot(ActivityHandler):
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content= deleteCard( singletask ) ))
 
-                    if turn_context.activity.value =='delete_task':
-                        requests.delete(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]),json=singletask)
-                        await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料成功刪除 ~ ')
-                    else:
-                        turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料未刪除 ~ ')
+                elif turn_context.activity.value =='confirm_delete_task':
+                    data=turn_context.activity.value
+                    # singletask ={"todo_id":data["todo_id"]}
+                    requests.delete(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(teams_tenantID,data["todo_id"]))#,json=singletask
+                    await turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料成功刪除')
+                elif turn_context.activity.value =='cancel_delete_task':
+                    data=turn_context.activity.value
+                    turn_context.send_activity('Todo List 項目ID`:'+data["todo_id"]+' 資料未刪除')
                         
                 elif turn_context.activity.value['card_request_type'] == 'submit_update':
                     data=turn_context.activity.value

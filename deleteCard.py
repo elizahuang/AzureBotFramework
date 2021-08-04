@@ -42,7 +42,7 @@ deleteCard={
                                 "type": "Action.Submit",
                                 "title": "刪除",
                                 "data": {
-                                    "card_request_type": "delete_task",
+                                    "card_request_type": "confirm_delete_task",
                                     "task_id": "12342151"
                                 }
                             }
@@ -77,9 +77,10 @@ def deleteCard(singletask):
     cardToReturn=copy.deepcopy(deleteCard)
     cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
 
-    cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"].update()
-    cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"].update()
-    
+    # cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"].update(singletask)
+    # cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"].update(singletask)
+    cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]
+    cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]   
     
 
     return cardToReturn
