@@ -139,6 +139,7 @@ class MyBot(ActivityHandler):
                 
                 elif turn_context.activity.value['card_request_type'] == 'update_task':                
                     data=turn_context.activity.value
+                    print('data:\n',data)
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     contextToReturn = MessageFactory.attachment(Attachment(
@@ -149,7 +150,7 @@ class MyBot(ActivityHandler):
                     singletask ={"todo_id":data["todo_id"]}
                     print('singletask:\n',singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content= deleteCard( singletask ) ))
+                    content_type='application/vnd.microsoft.card.adaptive', content= deleteCard(singletask) ))
 
                 elif turn_context.activity.value =='confirm_delete_task':
                     data=turn_context.activity.value
