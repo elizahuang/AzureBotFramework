@@ -168,6 +168,7 @@ testCard={
             ],
             "placeholder": "請選擇 hr (24小時制)",
             "id": "start_time_hour"
-        }, 
+        }, add .
+        
     ]
 }
