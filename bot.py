@@ -67,40 +67,31 @@ class MyBot(ActivityHandler):
                   contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
             elif turn_context.activity.text == 'help':
                 contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"tsmc"，查看網頁的url\n\n 輸入"新增代辦事項"，新增代辦事項\n\n'
-            elif turn_context.activity.text == '新增代辦事項':
+            elif '新增代辦事項' in turn_context.activity.text: #turn_context.activity.text == '新增代辦事項':
                 contextToReturn = MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                                         content=copy.deepcopy(addToDoListAdapCard)))
-            elif turn_context.activity.text == 'todo':
-                contextToReturn = requests.get(
-                    'https://jsonplaceholder.typicode.com/todos/1').content.decode('utf-8')
             elif turn_context.activity.text == 'tsmc':
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareEhrCard()))         
-            elif turn_context.activity.text == 'card':
-                cardAtt = create_hero_card()
-                contextToReturn = MessageFactory.attachment(cardAtt)
-            elif turn_context.activity.text == 'testMessage':
-                contextToReturn = MessageFactory.text(
-                        "Welcome to CardBot. "
-                        + "This bot will show you different types of Rich Cards. "
-                        + "Please type anything to get started."
-                    )
-            elif turn_context.activity.text == 'adaptive':
-                # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
-                #                           content=adapCard))
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=testCard))
-            elif turn_context.activity.text == 'viewAllTest':
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCardTest()))
-            elif turn_context.activity.text == '查看代辦事項':
+            # elif turn_context.activity.text == 'card':
+            #     cardAtt = create_hero_card()
+            #     contextToReturn = MessageFactory.attachment(cardAtt)
+            # elif turn_context.activity.text == 'testMessage':
+            #     contextToReturn = MessageFactory.text(
+            #             "Welcome to CardBot. "
+            #             + "This bot will show you different types of Rich Cards. "
+            #             + "Please type anything to get started."
+            #         )
+            # elif turn_context.activity.text == 'adaptive':
+            #     # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
+            #     #                           content=adapCard))
+            #     contextToReturn = MessageFactory.attachment(Attachment(
+            #         content_type='application/vnd.microsoft.card.adaptive', content=testCard))
+            elif '查看代辦事項' in turn_context.activity.text:#turn_context.activity.text == '查看代辦事項'
                 # tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
                 #     {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False},
-                # {"todo_id": "321321", "todo_name": "test2", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
-                # print('teams_tenantID\n',teams_tenantID)
                 tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID))
                 if tasksInfo.status_code == requests.codes.ok:
                     # print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
