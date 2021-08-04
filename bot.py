@@ -150,7 +150,7 @@ class MyBot(ActivityHandler):
                     singletask ={"todo_id":data["todo_id"]}
                     print('singletask:\n',singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content= deleteCard(singletask) ))
+                    content_type='application/vnd.microsoft.card.adaptive', content= deleteTask(singletask) ))
 
                 elif turn_context.activity.value =='confirm_delete_task':
                     data=turn_context.activity.value
