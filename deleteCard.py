@@ -76,8 +76,12 @@ def deleteCard(singletask):
     cardToReturn=copy.deepcopy(deleteCard)
     print('**********singletask**********: ', singletask)
     print('**********singletask**********: ', type(singletask))
-    print('cardToReturn["body"][1]["facts"][0]["value"]:    ',cardToReturn["body"][1]["facts"][0])
-    print('cardToReturn["body"][1]["facts"][0]["value"]:    ',type(cardToReturn["body"][1]["facts"][0]))
+    print('type cardToReturn',type(cardToReturn))
+    print('type cardToReturn',type(cardToReturn["body"]))
+    print('type cardToReturn',type(cardToReturn["body"][1]))
+    print('type cardToReturn',type(cardToReturn["body"][1]["facts"]))
+    print('cardToReturn["body"][1]["facts"][0]:    ',cardToReturn["body"][1]["facts"][0])
+    print('cardToReturn["body"][1]["facts"][0] type:    ',type(cardToReturn["body"][1]["facts"][0]))
     # cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
     cardToReturn["body"][1]["facts"][0]={"title": "項目 ID","value":singletask["todo_id"]}
 
