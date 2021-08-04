@@ -79,8 +79,8 @@ def deleteTask(singletask):
 
     # cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"].update(singletask)
     # cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"].update(singletask)
-    cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]
-    cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"]["task_id"]=singletask["todo_id"]   
+    cardToReturn["body"][2]["columns"][0]["items"][0]["actions"][0]["data"]["todo_id"]=singletask["todo_id"]
+    cardToReturn["body"][2]["columns"][1]["items"][0]["actions"][0]["data"]["todo_id"]=singletask["todo_id"]   
     
 
     return cardToReturn
