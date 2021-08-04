@@ -3,6 +3,9 @@
 
 from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFactory# get_conversation_reference
 from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, ActionTypes, Attachment, Activity, ActivityTypes
+from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
+from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
+from botbuilder.core.bot_state import BotState
 import requests
 import json
 import copy
@@ -34,6 +37,37 @@ class MyBot(ActivityHandler):
     contextToReturn = None
 
     async def on_message_activity(self, turn_context: TurnContext):
+        paged_members = []
+        continuation_token = None       
+        while True:
+            current_page = await TeamsInfo.get_paged_members(
+                turn_context, continuation_token, 100
+            )
+            continuation_token = current_page.continuation_token
+            paged_members.extend(current_page.members)
+
+            if continuation_token is None:
+                break
+        for m in paged_members: 
+            print('paged_members:  ',m.as_dict())
+        print()
+        
+        try:
+            member = await TeamsInfo.get_member(
+                turn_context, turn_context.activity.from_property.id
+            )
+        except Exception as e:
+            if "MemberNotFoundInConversation" in e.args[0]:
+                await turn_context.send_activity("Member not found.")
+            else:
+                raise
+        else:
+            print('member: ',member)
+        print()
+        
+        # print('BotState get:\n')
+        # [print(s) for s in BotState.get(turn_context=turn_context)] 
+
         # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         conversation_id=TurnContext.get_conversation_reference(turn_context.activity).user.id
