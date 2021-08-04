@@ -12,7 +12,6 @@ from addTodoCard import *
 from addOrUpdateResultCard import *
 from myEhrCard import *
 from deleteCard import *
-from test import testCard
 
 
 def create_hero_card() -> Attachment:
