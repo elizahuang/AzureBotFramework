@@ -68,10 +68,10 @@ class MyBot(ActivityHandler):
         # print('BotState get:\n')
         # [print(s) for s in BotState.get(turn_context=turn_context)] 
 
-        # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
+            # print('activity: ',json.dumps(turn_context.activity, sort_keys=True, indent=4),'\n')
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
-        conversation_id=TurnContext.get_conversation_reference(turn_context.activity).user.id
-        print('**************get converstion id**************\n',conversation_id)
+        userid=TurnContext.get_conversation_reference(turn_context.activity).user.id
+        print('**************get converstion id**************\n',userid)
         # print(get_conversation_reference(conversation_id))
         # print('**************get user id**************\n',(turn_context.activity).from.id)
         print('turn_context.activity:\n',turn_context.activity)
@@ -90,7 +90,7 @@ class MyBot(ActivityHandler):
                 employee_id=turn_context.activity.text[3:]
                 data={
                   "employee_id":employee_id,
-                  "user_id":teams_tenantID
+                  "user_id":userid#teams_tenantID
                 }
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 if result.status_code == requests.codes.ok:
