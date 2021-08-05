@@ -96,6 +96,7 @@ class MyBot(ActivityHandler):
                   "user_id":userid,#teams_tenantID
                   "tenant_id":conversation_dict["tenant_id"] if "tenant_id" in conversation_dict.keys() else None
                 }
+                print('data: ',data)
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 if result.status_code == requests.codes.ok:
                 # response
