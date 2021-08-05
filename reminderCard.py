@@ -121,7 +121,7 @@ def prepareReminderCard(taskToRemind):
     reminderCard["actions"][0]["card"]["body"][0]["facts"][0]["value"]=taskToRemind["todo_id"]
     reminderCard["actions"][0]["card"]["body"][0]["facts"][1]["value"]=taskToRemind["todo_name"]
     reminderCard["actions"][0]["card"]["body"][0]["facts"][2]["value"]=taskToRemind["todo_date"]
-    reminderCard["actions"][0]["card"]["body"][0]["facts"][3]["value"]="True" if taskToRemind["completed"] else"False"
+    reminderCard["actions"][0]["card"]["body"][0]["facts"][3]["value"]="True" if taskToRemind["todo_completed"] else"False"
     if len(taskToRemind["todo_contents"])<=20: 
       reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=taskToRemind["todo_contents"]
     else: 
