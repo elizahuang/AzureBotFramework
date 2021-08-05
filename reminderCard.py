@@ -128,3 +128,4 @@ def prepareReminderCard(taskToRemind):
       reminderCard["actions"][0]["card"]["body"][1]["text"]=taskToRemind["todo_contents"]
       reminderCard["actions"][0]["card"]["body"][1]["isVisible"]=True
       reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=" "
+    return reminderCard
