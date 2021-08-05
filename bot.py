@@ -5,7 +5,6 @@ from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFa
 from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, ActionTypes, Attachment, Activity, ActivityTypes
 from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
 from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
-from botbuilder.core.bot_state import BotState
 import requests
 import json
 import copy
@@ -53,18 +52,18 @@ class MyBot(ActivityHandler):
             print('paged_members:  ',m.as_dict())
         print()
         
-        # try:
-        #     member = await TeamsInfo.get_member(
-        #         turn_context, turn_context.activity.from_property.id
-        #     )
-        # except Exception as e:
-        #     if "MemberNotFoundInConversation" in e.args[0]:
-        #         await turn_context.send_activity("Member not found.")
-        #     else:
-        #         raise
-        # else:
-        #     print('member: ',member)
-        # print()
+        try:
+            member = await TeamsInfo.get_member(
+                turn_context, turn_context.activity.from_property.id
+            )
+        except Exception as e:
+            if "MemberNotFoundInConversation" in e.args[0]:
+                await turn_context.send_activity("Member not found.")
+            else:
+                raise
+        else:
+            print('member: ',member)
+        print()
         
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         userid=TurnContext.get_conversation_reference(turn_context.activity).user.id
