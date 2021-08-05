@@ -37,6 +37,7 @@ class MyBot(ActivityHandler):
 
     async def on_message_activity(self, turn_context: TurnContext):
         print('turn_context.activity:\n',turn_context.activity)
+
         paged_members = []
         continuation_token = None       
         while True:
@@ -51,19 +52,22 @@ class MyBot(ActivityHandler):
         for m in paged_members: 
             print('paged_members:  ',m.as_dict())
         print()
-        
-        try:
-            member = await TeamsInfo.get_member(
-                turn_context, turn_context.activity.from_property.id
-            )
-        except Exception as e:
-            if "MemberNotFoundInConversation" in e.args[0]:
-                await turn_context.send_activity("Member not found.")
-            else:
-                raise
-        else:
-            print('member: ',member)
-        print()
+
+        print('turn_context_from_property: \n',turn_context.activity.from_property.as_dict())        
+        print('turn_context_conversation: \n',turn_context.activity.conversation.as_dict())
+        print('turn_context_recipient: \n',turn_context.activity.recipient.as_dict())
+        # try:
+        #     member = await TeamsInfo.get_member(
+        #         turn_context, turn_context.activity.from_property.id
+        #     )
+        # except Exception as e:
+        #     if "MemberNotFoundInConversation" in e.args[0]:
+        #         await turn_context.send_activity("Member not found.")
+        #     else:
+        #         raise
+        # else:
+        #     print('member: ',member)
+        # print()
         
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         userid=TurnContext.get_conversation_reference(turn_context.activity).user.id
