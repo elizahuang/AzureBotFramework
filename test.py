@@ -147,8 +147,9 @@ print('response3',response3)
 # cron-messages
 # [POST] https://xxxxxx/api/v1/cron-messages
 
+# tenant_id
 # {
-#     "tanent_id": str
-#     "user_id": str
-#     "todo": {XXXXX}
+# 	"user_id": "test",
+# 	"employee_id": "test",
+# 	"tenant_id": "test"
 # }
