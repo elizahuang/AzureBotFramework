@@ -90,11 +90,17 @@ class MyBot(ActivityHandler):
                 # TODO 連接 API
                 # see mongo DB connect mongo db
                 employee_id=turn_context.activity.text[3:]
-                data={
-                  "employee_id":employee_id,
-                  "user_id":userid,#teams_tenantID
-                  "tenant_id":conversation_dict["tenant_id"] if "tenant_id" in conversation_dict.keys() else None
-                }
+                if "tenant_id" in conversation_dict.keys():
+                    data={
+                    "employee_id":employee_id,
+                    "user_id":userid,#teams_tenantID
+                    "tenant_id":conversation_dict["tenant_id"]
+                    }
+                else: 
+                    data={
+                    "employee_id":employee_id,
+                    "user_id":userid
+                    }
                 print('data: ',data)
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 print('result: ',result)
