@@ -203,7 +203,7 @@ def prepareViewAllCard(taskInfos):
         # task_template[0]["facts"][4]["value"]=task["end_date"] 
         # task_template[0]["facts"][5]["value"]=task["end_time"]
         task_template[0]["facts"][3]["value"]=task["todo_completed"]  
-        if len(task["todo_contents"])<=35:                            
+        if len(task["todo_contents"])<=34:                            
             task_template[0]["facts"][4]["value"]=task["todo_contents"]
         else:
             task_template[0]["facts"][4]["value"]=" "
