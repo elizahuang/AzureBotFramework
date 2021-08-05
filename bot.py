@@ -35,7 +35,7 @@ def create_hero_card() -> Attachment:
 class MyBot(ActivityHandler):
     # See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     contextToReturn = None
-    testBotSkill=BotFrameworkSkill()
+
     async def on_message_activity(self, turn_context: TurnContext):
         print('turn_context.activity:\n',turn_context.activity)
 
