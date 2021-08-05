@@ -57,6 +57,7 @@ class MyBot(ActivityHandler):
         print('turn_context_from_property: \n',turn_context.activity.from_property.as_dict())        
         print('turn_context_conversation: \n',turn_context.activity.conversation.as_dict())
         print('turn_context_recipient: \n',turn_context.activity.recipient.as_dict())
+        print('tenant_id: \n',turn_context.activity.conversation.as_dict()["tenant_id"])
         # try:
         #     member = await TeamsInfo.get_member(
         #         turn_context, turn_context.activity.from_property.id
@@ -91,7 +92,8 @@ class MyBot(ActivityHandler):
                 employee_id=turn_context.activity.text[3:]
                 data={
                   "employee_id":employee_id,
-                  "user_id":userid#teams_tenantID
+                  "user_id":userid,#teams_tenantID
+                  "tenant_id":turn_context.activity.conversation.as_dict()["tenant_id"]
                 }
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 if result.status_code == requests.codes.ok:
