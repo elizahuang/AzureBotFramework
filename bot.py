@@ -119,8 +119,7 @@ class MyBot(ActivityHandler):
             elif turn_context.activity.text == 'adaptive':
                 # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                 #                           content=adapCard))
-                task={"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
-                 "end_time": "12:00", "todo_contents": "contents,contents contents,contents contents,contents contents,contents contents,contents", "todo_completed": True}
+                task={"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30 20:08", "todo_contents": "contents,contents contents,contents contents,contents contents,contents contents,contents", "todo_completed": True}
                 contextToReturn = MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=prepareReminderCard(task)))
             elif '查看代辦事項' in turn_context.activity.text:#turn_context.activity.text == '查看代辦事項'
