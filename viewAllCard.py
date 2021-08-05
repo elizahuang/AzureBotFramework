@@ -31,14 +31,14 @@ singleTask= [{
                 {
                     "title": "項目日期",
                     "value": "2021-07-31"
-                },                
-                {
-                    "title": "項目內容及備註",
-                    "value": "xxxtask contentsxxx"  
                 },                        
                 {
                     "title": "完成",
                     "value": "False"
+                },                
+                {
+                    "title": "項目內容及備註",
+                    "value": "xxxtask contentsxxx"  
                 }
             ],
             "separator": True
