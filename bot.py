@@ -5,7 +5,6 @@ from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFa
 from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, ActionTypes, Attachment, Activity, ActivityTypes
 from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
 from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
-botbuilder.core.skills.bot_framework_skill import BotFrameworkSkill
 import requests
 import json
 import copy
