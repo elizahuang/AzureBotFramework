@@ -44,6 +44,14 @@ singleTask= [{
             "separator": True
         },
         {
+            "type": "TextBlock",
+            "text": "項目內容備註內容",
+            "wrap": True,
+            "id": "task contents__for long contents",
+            "separator": True,
+            "isVisible":False    
+        },
+        {
             "type": "ColumnSet",
             "columns": [
                 {
@@ -127,14 +135,6 @@ singleTask_old= [{
                 }
             ],
             "separator": True
-        },
-        {
-            "type": "TextBlock",
-            "text": "項目內容備註內容",
-            "wrap": True,
-            "id": "task contents__for long contents",
-            "separator": True,
-            "isVisible":False    
         },
         {
             "type": "ColumnSet",
