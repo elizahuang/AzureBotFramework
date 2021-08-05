@@ -97,6 +97,7 @@ class MyBot(ActivityHandler):
                 }
                 print('data: ',data)
                 result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
+                print('result: ',result)
                 if result.status_code == requests.codes.ok:
                 # response
                   contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"新增代辦事項"，來新增TodoList\n\n  輸入"tsmc"，查看網頁的url'
