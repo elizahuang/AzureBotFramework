@@ -5,6 +5,7 @@ from botbuilder.core import ActivityHandler, TurnContext, CardFactory, MessageFa
 from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, ActionTypes, Attachment, Activity, ActivityTypes
 from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
 from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
+botbuilder.core.skills.bot_framework_skill import BotFrameworkSkill
 import requests
 import json
 import copy
@@ -34,7 +35,7 @@ def create_hero_card() -> Attachment:
 class MyBot(ActivityHandler):
     # See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     contextToReturn = None
-
+    testBotSkill=BotFrameworkSkill()
     async def on_message_activity(self, turn_context: TurnContext):
         print('turn_context.activity:\n',turn_context.activity)
 
