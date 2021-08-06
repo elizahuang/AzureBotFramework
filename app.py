@@ -102,10 +102,9 @@ async def sendReminder(request):
         'client_secret':appSecret,
         'scope':'https://api.botframework.com/.default'}
     
-    r = requests.post(url, data=(payload))# data=json.dumps(payload)
-    response=json.loads(r.content.decode('utf-8'))
-    access_token=response['access_token']
-    
+    response=json.loads(requests.post(url, data=(payload)).content.decode('utf-8'))
+    access_token=response['access_token']  
+    print('access_token:\n',access_token) 
     
     ## get conversationId
     header={'Authorization': 'Bearer ' + access_token} #, 'content-type':'application/json'
@@ -125,9 +124,9 @@ async def sendReminder(request):
         "tenantId": tenant_id,
         "topicName": "proactive msg"
     }
-    conversation_response= requests.post(url,json=(payload), headers=header).content.decode('utf-8')
-    conversation_response=json.loads(conversation_response)
+    conversation_response=json.loads(requests.post(url,json=(payload), headers=header).content.decode('utf-8'))
     conversation_id=conversation_response["id"]
+    print('conversation_id: \n',conversation_id)
 
     url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversation_id)
     payload_template={
@@ -148,10 +147,10 @@ async def sendReminder(request):
     }
     payload=copy.deepcopy(payload_template)
     payload["attachments"]+=[cardToSend]
-    response_forSendMsg =requests.post(url, json=(payload), headers=header)
-    response_forSendMsg=response_forSendMsg.content.decode('utf-8')
+    response_forSendMsg =requests.post(url, json=(payload), headers=header).content.decode('utf-8')
+    print('response_forSendMsg',response_forSendMsg)
 
-    return
+    # return
 
 
 APP = web.Application(middlewares=[aiohttp_error_middleware])
