@@ -151,7 +151,7 @@ class MyBot(ActivityHandler):
             if turn_context.activity.value['card_request_type']!=None:
                 if turn_context.activity.value['card_request_type'] == 'submit_add': 
                     inputParams=turn_context.activity.value
-                    if 'start_time' not in inputParams.keys() or 'start_date' not in inputParams.keys() or 'start_date' not in inputParams.keys():
+                    if 'start_time' not in inputParams.keys() or 'start_date' not in inputParams.keys() or 'todo_name' not in inputParams.keys():
                         await turn_context.send_activity("新增失敗，請確認代辦事項之項目名稱、日期、時間是否填寫(不可為空值)。")
                         return
                     print(type(turn_context.activity.value['start_time']))
@@ -183,6 +183,9 @@ class MyBot(ActivityHandler):
                     data=turn_context.activity.value
                     print('data:\n',data)
                     # data["todo_date"]='2021-08-04 18:00'
+                    if 'start_time' not in data.keys() or 'todo_date' not in data.keys() or 'todo_name' not in data.keys():
+                        await turn_context.send_activity("新增失敗，請確認代辦事項之項目名稱、日期、時間是否填寫(不可為空值)。")
+                        return                    
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":data["todo_date"][:10],"start_time":data["todo_date"][11:],"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     contextToReturn = MessageFactory.attachment(Attachment(
