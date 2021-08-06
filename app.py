@@ -80,6 +80,9 @@ async def messages(req: Request) -> Response:
 async def sendReminder(req: Request)-> Response:
     params=req.json()
     print('params',params)
+    print('params type',type(params))
+    print('params decode',params.decode('utf-8'))
+    print('params transfer to json',json.loads(params))
     '''
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
