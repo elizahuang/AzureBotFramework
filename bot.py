@@ -6,8 +6,7 @@ from botbuilder.schema import ChannelAccount, HeroCard, CardAction, CardImage, A
 from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
 from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
 import requests
-import json
-import copy
+import json, copy,re
 from updateCard import *
 from viewAllCard import *
 from addTodoCard import *
@@ -86,13 +85,17 @@ class MyBot(ActivityHandler):
         # print('teams_tenantID',teams_tenantID)
         
         if turn_context.activity.text != None:
-            if turn_context.activity.text.startswith("工號_"):
+            regex=re.compile(r'工號_(\d+)')
+            match=regex.search(turn_context.activity.text)
+            # if turn_context.activity.text.startswith("工號_"):
+            matchResult=match.group(1)
+            if matchResult:
                 # TODO 連接 API
                 # see mongo DB connect mongo db
-                employee_id=turn_context.activity.text[3:]
+                # employee_id=turn_context.activity.text[3:]
                 if "tenant_id" in conversation_dict.keys():
                     data={
-                    "employee_id":employee_id,
+                    "employee_id":matchResult,
                     "user_id":userid,#teams_tenantID
                     "tenant_id":conversation_dict["tenant_id"]
                     }
