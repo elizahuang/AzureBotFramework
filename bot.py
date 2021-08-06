@@ -161,7 +161,7 @@ class MyBot(ActivityHandler):
                     my_data = {'todo_name': turn_context.activity.value['todo_name'], 
                                 'todo_date': todoDate,
                                 'todo_contents': turn_context.activity.value['todo_contents'] if 'todo_contents' in turn_context.activity.value.keys() else "   ",
-                                'todo_completed': turn_context.activity.value['todo_completed'],
+                                'todo_completed': True if (turn_context.activity.value["todo_completed"]=='true') or (turn_context.activity.value["todo_completed"]==True) or (turn_context.activity.value["todo_completed"]=='True') else False,
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 # 'employee_id': '120734'#turn_context.activity.channel_data['tenant']['id'],
                                 }
@@ -211,7 +211,8 @@ class MyBot(ActivityHandler):
                     data=turn_context.activity.value
                     print("submit_update data:",data)
                     date_time=data["todo_date"]+' '+data["start_time"] if "start_time" in data.keys() else data["todo_date"]+' '+"00:00"
-                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":date_time,"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
+                    singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":date_time,"todo_contents":data["todo_contents"],
+                    "todo_completed":True if (data["todo_completed"]=='true') or (data["todo_completed"]==True) or (data["todo_completed"]=='True') else False}
                     print('singletask:\n',singletask)
                     # call submit出去的API
                     requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(userid,data["todo_id"]),json=singletask)

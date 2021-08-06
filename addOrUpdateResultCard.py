@@ -55,7 +55,7 @@ def addOrUpdateResultCard(singletask):
     cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
     cardToReturn["body"][1]["facts"][1]["value"]=singletask["todo_name"]
     cardToReturn["body"][1]["facts"][2]["value"]=singletask["todo_date"]
-    cardToReturn["body"][1]["facts"][3]["value"]="True" if (singletask["todo_completed"]=='true') or (singletask["todo_completed"]==True) or (singletask["todo_completed"]=='True') else "False"
+    cardToReturn["body"][1]["facts"][3]["value"]=True if (singletask["todo_completed"]=='true') or (singletask["todo_completed"]==True) or (singletask["todo_completed"]=='True') else False
     cardToReturn["body"][1]["facts"][4]["value"]=singletask["todo_contents"]    
     if singletask["todo_contents"]:
       if len(singletask["todo_contents"])<=21: 
