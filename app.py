@@ -76,13 +76,16 @@ async def messages(req: Request) -> Response:
         return json_response(data=response.body, status=response.status)
     return Response(status=201)
 
-
-def sendReminder(req: Request)-> Response:
-    params=req.json()
-    print('params',params)
-    print('params type',type(params))
-    print('params decode',params.decode('utf-8'))
-    print('params transfer to json',json.loads(params))
+routes = web.RouteTableDef()
+@routes.post('/api/v1/cron-messages')
+async def sendReminder(request):
+    data = await request.post()
+    print(data)
+    # params=req.json()
+    # print('params',params)
+    # print('params type',type(params))
+    # print('params decode',params.decode('utf-8'))
+    # print('params transfer to json',json.loads(params))
 
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
@@ -186,7 +189,8 @@ def sendReminder(req: Request)-> Response:
 
 APP = web.Application(middlewares=[aiohttp_error_middleware])
 APP.router.add_post("/api/messages", messages)
-APP.router.add_post("/api/v1/cron-messages",sendReminder)
+APP.add_routes(routes)
+# APP.router.add_post("/api/v1/cron-messages",sendReminder)
 
 
 if __name__ == "__main__":
