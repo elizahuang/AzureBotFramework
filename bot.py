@@ -88,7 +88,7 @@ class MyBot(ActivityHandler):
             regex=re.compile(r'工號_(\d+)')
             match=regex.search(turn_context.activity.text)
             # if turn_context.activity.text.startswith("工號_"):
-            matchResult=match.group(1)
+            matchResult=match.group(1) if match.group(1) else False
             if matchResult:
                 # TODO 連接 API
                 # see mongo DB connect mongo db
