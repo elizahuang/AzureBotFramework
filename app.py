@@ -80,7 +80,7 @@ async def messages(req: Request) -> Response:
 routes = web.RouteTableDef()
 @routes.post('/api/v1/cron-messages')
 async def sendReminder(request):
-    data = request.match_info['test']
+    data = request.json()
 
     print('data: ',data)
     # params=req.json()
