@@ -5,7 +5,7 @@ image_read = image.read()
 image_64_encode = base64.b64encode(image_read).decode()
 
 reminderTemplate={
-  "contentType": "application/vnd.microsoft.teams.card.list",
+  "contentType": "application/vnd.microsoft.card.adaptive",
   "content": {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
