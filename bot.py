@@ -209,6 +209,7 @@ class MyBot(ActivityHandler):
                         
                 elif turn_context.activity.value['card_request_type'] == 'submit_update':
                     data=turn_context.activity.value
+                    print("submit_update data:",data)
                     date_time=data["todo_date"]+' '+data["start_time"]
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":date_time,"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
