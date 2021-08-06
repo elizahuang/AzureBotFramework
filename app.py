@@ -78,12 +78,8 @@ async def messages(req: Request) -> Response:
 
 
 async def sendReminder(req: Request)-> Response:
-    if "application/json" in req.headers["Content-Type"]:
-        body = await req.json()
-        print(body)
-    else:
-        return Response(status=415)
-
+    await params=request.json()
+    print('params',params)
     '''
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'

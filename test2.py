@@ -1,6 +1,6 @@
-import requests,datetime
+import requests,datetime,json
 
-testdate=datetime.datetime.now()
-testData={"test":"123","todo":{"date":testdate}}
+testdate= datetime.datetime(2021, 8, 6, 2, 0)
+testData=json.dumps({"test":"123","todo":{"date":str(testdate)}})
 
-requests.post('https://azure-bot-framework.herokuapp.com/api/v1/cron-messages',json=testData)
+requests.post('https://azure-bot-framework.herokuapp.com/api/v1/cron-messages',data=testData)
