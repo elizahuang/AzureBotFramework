@@ -1,4 +1,4 @@
-import os, base64,copy
+import os, base64,copy,requests
 file = os.path.join(os.getcwd(), "winnie.jpg")
 image = open(file, 'rb')
 image_read = image.read()
@@ -134,6 +134,3 @@ def prepareReminderCard(taskToRemind):
 # accessTokenUrl='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
 
 
-def sendReminder():
-  
-  return
