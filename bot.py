@@ -150,6 +150,10 @@ class MyBot(ActivityHandler):
         elif turn_context.activity.value != None:
             if turn_context.activity.value['card_request_type']!=None:
                 if turn_context.activity.value['card_request_type'] == 'submit_add': 
+                    inputParams=turn_context.activity.value
+                    if 'start_time' not in inputParams.keys() or 'start_date' not in inputParams.keys() or 'start_date' not in inputParams.keys():
+                        await turn_context.send_activity("新增失敗，請確認代辦事項之項目名稱、日期、時間是否填寫(不可為空值)。")
+                        return
                     print(type(turn_context.activity.value['start_time']))
                     # TODO 接到正確的API
                     todoDate = turn_context.activity.value['start_date'] + " " + turn_context.activity.value['start_time']
@@ -173,7 +177,7 @@ class MyBot(ActivityHandler):
                     else: 
                         print(r.status_code)
                         print("Error: ", r.content)
-                        contextToReturn = '請確認是否已經添加工號，如果問題持續發生，請聯絡系統管理員，謝謝'
+                        contextToReturn = '請確認是否已經添加工號，以及代辦事項之項目名稱、日期、時間是否填寫(不可為空值)，如果問題持續發生，請聯絡系統管理員，謝謝'
                 
                 elif turn_context.activity.value['card_request_type'] == 'update_task':                
                     data=turn_context.activity.value
