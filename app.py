@@ -92,7 +92,7 @@ async def sendReminder(request):
     botId='28:30eba4f2-6e15-458b-9fdf-f8bbf25efb4f'
     userId=todoInfo['user_id']    
     tenant_id=todoInfo['tenant_id']
-
+    cardToSend=prepareReminderCard(todoInfo["todo"])
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
     payload = {'Host': 'login.microsoftonline.com',
@@ -130,7 +130,7 @@ async def sendReminder(request):
     conversation_id=conversation_response["id"]
 
     url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversation_id)
-    payload={
+    payload_template={
         "type": "message",
         "from": {
             "id": botId,
@@ -144,8 +144,10 @@ async def sendReminder(request):
             "id": userId,
             "name":"",# "Yi Huang 黃懿"
         },
-        "attachments": [await prepareReminderCard(todoInfo["todo"])]
+        "attachments": []
     }
+    payload=copy.deepcopy(payload_template)
+    payload["attachments"]+=[cardToSend]
     response_forSendMsg =await  requests.post(url, json=(payload), headers=header)
     response_forSendMsg=response_forSendMsg.content.decode('utf-8')
 
