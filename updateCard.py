@@ -411,7 +411,7 @@ updateCard={
         {
             "type": "Input.Toggle",
             "title": "已完成",
-            "value": "false",
+            "value": False,
             "id": "todo_completed",
             "separator": True,
         },

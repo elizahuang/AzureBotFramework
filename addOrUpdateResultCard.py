@@ -35,7 +35,7 @@ presentCard={
                 },                        
                 {
                     "title": "已完成",
-                    "value": "False"
+                    "value": False
                 }
             ]
         }
