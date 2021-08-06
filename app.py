@@ -5,6 +5,7 @@ import sys,os,json,requests
 import traceback
 from datetime import datetime
 
+
 from aiohttp import web
 from aiohttp.web import Request, Response, json_response
 from botbuilder.core import (
@@ -79,7 +80,8 @@ async def messages(req: Request) -> Response:
 routes = web.RouteTableDef()
 @routes.post('/api/v1/cron-messages')
 async def sendReminder(request):
-    data = request.post()
+    data = request.match_info['test']
+
     print(data)
     # params=req.json()
     # print('params',params)
