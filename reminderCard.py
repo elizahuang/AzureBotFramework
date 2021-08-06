@@ -133,5 +133,5 @@ def prepareReminderCard(taskToRemind):
   
 # accessTokenUrl='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
 
-# def sendReminder(todo, tenant_id, user_id):
-
+def sendReminder(todo, tenant_id, user_id):
+  return
