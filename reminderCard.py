@@ -4,9 +4,10 @@ image = open(file, 'rb')
 image_read = image.read()
 image_64_encode = base64.b64encode(image_read).decode()
 
-reminderTemplate={
+contentContainer={
   "contentType": "application/vnd.microsoft.card.adaptive",
-  "content": {
+  "content": ""}
+reminderTemplate={
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
   "version": "1.0",
@@ -115,7 +116,7 @@ reminderTemplate={
       }
     }
   ]
-}}
+}
 
 def prepareReminderCard(taskToRemind):
     reminderCard=copy.deepcopy(reminderTemplate) #20字以上換行
@@ -131,7 +132,9 @@ def prepareReminderCard(taskToRemind):
         reminderCard["actions"][0]["card"]["body"][1]["text"]=taskToRemind["todo_contents"]
         reminderCard["actions"][0]["card"]["body"][1]["isVisible"]=True
         reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=" "
-    return reminderCard
+    container=copy.deepcopy(contentContainer)
+    container["content"]=reminderCard
+    return container
   
 # accessTokenUrl='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
 
