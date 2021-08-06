@@ -146,7 +146,7 @@ async def sendReminder(request):
         },
         "attachments": [await prepareReminderCard(todoInfo["todo"])]
     }
-    await response_forSendMsg = requests.post(url, json=(payload), headers=header)
+    response_forSendMsg =await  requests.post(url, json=(payload), headers=header)
     response_forSendMsg=response_forSendMsg.content.decode('utf-8')
 
     return
