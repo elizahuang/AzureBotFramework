@@ -80,40 +80,34 @@ async def messages(req: Request) -> Response:
 routes = web.RouteTableDef()
 @routes.post('/api/v1/cron-messages')
 async def sendReminder(request):
-    data = await request.json()
-
-    print('data: ',data)
-    print(type(data))
-    print(data['test'],data['todo']['date'])
-    # params=req.json()
-    # print('params',params)
-    # print('params type',type(params))
-    # print('params decode',params.decode('utf-8'))
-    # print('params transfer to json',json.loads(params))
+    todoInfo = await request.json()  # suppose a dict now    
+    # {'tenant_id': '98fb227d-9ccb-46af-bbc7-7adfb3090fa6', 
+    # 'user_id': '29:1EHxt_msQczs0jFpTh3HUdDzzbQhOQLsins3m8VHWjctZ2DF7Htq-89Dmv3T-t6KhnJxn2uzoNL1r5qNEu3myiQ', 
+    # 'todo':  {'todo_id': 'Gq31ES4ipg', 'todo_name': 'test_cronjob', 
+    # 'todo_date': datetime.datetime(2021, 8, 6, 2, 0), 
+    # 'todo_contents': 'test_cronjob', 'todo_update_date': '2021/08/05', 
+    # 'todo_completed': False, 'employee_id': '109491'}}
+    teams_appid='30eba4f2-6e15-458b-9fdf-f8bbf25efb4f'
+    appSecret='ElizaHuangTaigidian2021'
+    botId='28:30eba4f2-6e15-458b-9fdf-f8bbf25efb4f'
+    userId=todoInfo['user_id']    
+    tenant_id=todoInfo['tenant_id']
 
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
     payload = {'Host': 'login.microsoftonline.com',
         "Content-Type": "application/x-www-form-urlencoded",
         'grant_type':'client_credentials',
-        'client_id':'30eba4f2-6e15-458b-9fdf-f8bbf25efb4f',
-        'client_secret':'ElizaHuangTaigidian2021',
+        'client_id':teams_appid,
+        'client_secret':appSecret,
         'scope':'https://api.botframework.com/.default'}
     
     r = requests.post(url, data=(payload))# data=json.dumps(payload)
     response=json.loads(r.content.decode('utf-8'))
     access_token=response['access_token']
     
-    '''
+    
     ## get conversationId
-    userId='29:1lNWDIz8Jn0YgoFx8LTJWrkqchAJb1Vg0bJK-PvHxe2FHzNXzFHYaeA0P9j58qQyPVVUCKUfpbZlBNcepHMaajg'
-    usesrid_office='29:1htJmKwuNtPEggpMm5kJ73ht47oIbddUOeEh1r1DFpf7vJmh83_C7Q3sBnFcxS3EJv5hHqcu0Po3_-dMmfqnMfA'
-    chiahao_usrid='29:1Wp-wm0z5gjBGyNBqmeAnHZVrEz_x8QNh-DQKlIgNuVB59ACaKVJql-cQz2n6IixsodQs12DorLl9c7Rbwi4e9w'
-    teams_appid='30eba4f2-6e15-458b-9fdf-f8bbf25efb4f'
-    botId='28:30eba4f2-6e15-458b-9fdf-f8bbf25efb4f'
-    # tenant_id='9255f64b-1818-42e5-ad78-f619a9a7b1e7'
-    tenant_id='010281b3-d5d6-4bc8-b561-bf4794b97036'
-
     header={'Authorization': 'Bearer ' + access_token} #, 'content-type':'application/json'
     url=f'https://smba.trafficmanager.net/apac/v3/conversations'
     payload={
@@ -124,17 +118,16 @@ async def sendReminder(request):
         "isGroup": False,
         "members": [
             {
-                "id": userId,#usesrid_office,
-                "name": "借我測試一下"#"Yi Huang 黃懿"
+                "id": userId, #usesrid_office,
+                "name":"" #"Yi Huang 黃懿"
             }
         ],
         "tenantId": tenant_id,
-        "topicName": "Testing proactive msg"
+        "topicName": "proactive msg"
     }
-    response2= requests.post(url,json=(payload), headers=header).content.decode('utf-8')
-    response2=json.loads(response2)
-    print('conversationId:\n',response2)
-    conversation_id=response2["id"]
+    conversation_response= requests.post(url,json=(payload), headers=header).content.decode('utf-8')
+    conversation_response=json.loads(conversation_response)
+    conversation_id=conversation_response["id"]
 
     url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversation_id)
     payload={
@@ -145,50 +138,18 @@ async def sendReminder(request):
         },
         "conversation": {
             "id": conversation_id,
-            "name": "test conversation name"
+            "name": "send proactive msg now"
         },
         "recipient": {
             "id": userId,
-            "name": "Yi Huang 黃懿"
+            "name":"",# "Yi Huang 黃懿"
         },
-        "attachments": [
-            {
-                "contentType": "application/vnd.microsoft.card.hero",
-                "content": {
-                    "title": "title goes here",
-                    "subtitle": "subtitle goes here",
-                    "text": "descriptive text goes here",
-                    "images": [
-                        {
-                            "url": "https://www.publicdomainpictures.net/pictures/30000/t2/duck-on-a-rock.jpg",
-                            "alt": "picture of a duck",
-                            "tap": {
-                                "type": "playAudio",
-                                "value": "url to an audio track of a duck call goes here"
-                            }
-                        }
-                    ],
-                    "buttons": [
-                        {
-                            "type": "playAudio",
-                            "title": "Duck Call",
-                            "value": "url to an audio track of a duck call goes here"
-                        },
-                        {
-                            "type": "openUrl",
-                            "title": "Watch Video",
-                            "image": "https://www.publicdomainpictures.net/pictures/30000/t2/duck-on-a-rock.jpg",
-                            "value": "url goes here of the duck in flight"
-                        }
-                    ]
-                }
-            }
-        ]
+        "attachments": [prepareReminderCard(todoInfo["todo"])]
     }
-    response4 = requests.post(url, json=(payload), headers=header)
-    response4=response4.content.decode('utf-8')
-    print('response3',response3)
-    return'''
+    response_forSendMsg = requests.post(url, json=(payload), headers=header)
+    response_forSendMsg=response_forSendMsg.content.decode('utf-8')
+
+    return
 
 
 APP = web.Application(middlewares=[aiohttp_error_middleware])
