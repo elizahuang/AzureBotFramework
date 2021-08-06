@@ -83,6 +83,8 @@ async def sendReminder(request):
     data = await request.json()
 
     print('data: ',data)
+    print(type(data))
+    print(json.loads(data))
     # params=req.json()
     # print('params',params)
     # print('params type',type(params))
