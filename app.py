@@ -148,7 +148,7 @@ async def sendReminder(request):
     }
     payload=copy.deepcopy(payload_template)
     payload["attachments"]+=[cardToSend]
-    response_forSendMsg =await requests.post(url, json=(payload), headers=header)
+    response_forSendMsg =requests.post(url, json=(payload), headers=header)
     response_forSendMsg=response_forSendMsg.content.decode('utf-8')
 
     return
