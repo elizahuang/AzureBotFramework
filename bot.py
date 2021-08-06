@@ -156,7 +156,7 @@ class MyBot(ActivityHandler):
                     print(todoDate)
                     my_data = {'todo_name': turn_context.activity.value['todo_name'], 
                                 'todo_date': todoDate,
-                                'todo_contents': turn_context.activity.value['todo_contents'],
+                                'todo_contents': turn_context.activity.value['todo_contents'] if 'todo_contents' in turn_context.activity.value.keys() else "   ",
                                 'todo_completed': turn_context.activity.value['todo_completed'],
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
                                 # 'employee_id': '120734'#turn_context.activity.channel_data['tenant']['id'],
