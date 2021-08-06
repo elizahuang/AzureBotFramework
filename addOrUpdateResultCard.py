@@ -61,7 +61,7 @@ def addOrUpdateResultCard(singletask):
       if len(singletask["todo_contents"])<=21: 
         cardToReturn["body"][1]["facts"][4]["value"]=singletask["todo_contents"]
       else: 
-        cardToReturn["body"][1]["body"][2]["text"]=singletask["todo_contents"]
+        cardToReturn["body"][2]["text"]=singletask["todo_contents"]
         cardToReturn["body"][1]["body"][2]["isVisible"]=True
         cardToReturn["body"][1]["facts"][4]["value"]=" "    
     
