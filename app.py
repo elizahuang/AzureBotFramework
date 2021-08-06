@@ -82,7 +82,7 @@ routes = web.RouteTableDef()
 async def sendReminder(request):
     data = request.match_info['test']
 
-    print(data)
+    print('data: ',data)
     # params=req.json()
     # print('params',params)
     # print('params type',type(params))
