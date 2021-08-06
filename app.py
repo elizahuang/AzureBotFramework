@@ -78,7 +78,7 @@ async def messages(req: Request) -> Response:
 
 
 async def sendReminder(req: Request)-> Response:
-    await params=request.json()
+    params=req.json()
     print('params',params)
     '''
     ## access token
