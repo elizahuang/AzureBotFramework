@@ -122,15 +122,16 @@ def prepareReminderCard(taskToRemind):
     reminderCard["actions"][0]["card"]["body"][0]["facts"][1]["value"]=taskToRemind["todo_name"]
     reminderCard["actions"][0]["card"]["body"][0]["facts"][2]["value"]=taskToRemind["todo_date"]
     reminderCard["actions"][0]["card"]["body"][0]["facts"][3]["value"]="True" if taskToRemind["todo_completed"] else"False"
-    if len(taskToRemind["todo_contents"])<=21: 
-      reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=taskToRemind["todo_contents"]
-    else: 
-      reminderCard["actions"][0]["card"]["body"][1]["text"]=taskToRemind["todo_contents"]
-      reminderCard["actions"][0]["card"]["body"][1]["isVisible"]=True
-      reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=" "
+    if taskToRemind["todo_contents"]:
+      if len(taskToRemind["todo_contents"])<=21: 
+        reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=taskToRemind["todo_contents"]
+      else: 
+        reminderCard["actions"][0]["card"]["body"][1]["text"]=taskToRemind["todo_contents"]
+        reminderCard["actions"][0]["card"]["body"][1]["isVisible"]=True
+        reminderCard["actions"][0]["card"]["body"][0]["facts"][4]["value"]=" "
     return reminderCard
   
 # accessTokenUrl='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
 
 # def sendReminder(todo, tenant_id, user_id):
-   
+

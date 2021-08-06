@@ -17,6 +17,7 @@ from botbuilder.schema import Activity, ActivityTypes
 
 from bot import MyBot
 from config import DefaultConfig
+from reminderCard import sendReminder
 
 CONFIG = DefaultConfig()
 
@@ -80,6 +81,7 @@ async def messages(req: Request) -> Response:
 
 APP = web.Application(middlewares=[aiohttp_error_middleware])
 APP.router.add_post("/api/messages", messages)
+APP.router.add_post("/api/v1/cron-messages",sendReminder)
 
 
 
