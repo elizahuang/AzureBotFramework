@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-import sys,os,json,requests
+import sys,os,json,requests,copy
 import traceback
 from datetime import datetime
 
@@ -148,7 +148,7 @@ async def sendReminder(request):
     }
     payload=copy.deepcopy(payload_template)
     payload["attachments"]+=[cardToSend]
-    response_forSendMsg =await  requests.post(url, json=(payload), headers=header)
+    response_forSendMsg =await requests.post(url, json=(payload), headers=header)
     response_forSendMsg=response_forSendMsg.content.decode('utf-8')
 
     return
