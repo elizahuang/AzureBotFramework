@@ -210,7 +210,7 @@ class MyBot(ActivityHandler):
                 elif turn_context.activity.value['card_request_type'] == 'submit_update':
                     data=turn_context.activity.value
                     print("submit_update data:",data)
-                    date_time=data["todo_date"]+' '+data["start_time"]
+                    date_time=data["todo_date"]+' '+data["start_time"] if "start_time" in data.keys() else data["todo_date"]+' '+"00:00"
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":date_time,"todo_contents":data["todo_contents"],"todo_completed":data["todo_completed"]}
                     print('singletask:\n',singletask)
                     # call submit出去的API
