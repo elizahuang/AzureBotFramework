@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-import sys,os,json
+import sys,os,json,requests
 import traceback
 from datetime import datetime
 
@@ -77,13 +77,13 @@ async def messages(req: Request) -> Response:
     return Response(status=201)
 
 
-async def sendReminder(req: Request)-> Response:
+def sendReminder(req: Request)-> Response:
     params=req.json()
     print('params',params)
     print('params type',type(params))
     print('params decode',params.decode('utf-8'))
     print('params transfer to json',json.loads(params))
-    '''
+
     ## access token
     url='https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token'
     payload = {'Host': 'login.microsoftonline.com',
@@ -93,14 +93,11 @@ async def sendReminder(req: Request)-> Response:
         'client_secret':'ElizaHuangTaigidian2021',
         'scope':'https://api.botframework.com/.default'}
     
-    headers = {}# 
-    r = requests.post(url, data=(payload), headers=headers)# data=json.dumps(payload)
+    r = requests.post(url, data=(payload))# data=json.dumps(payload)
     response=json.loads(r.content.decode('utf-8'))
-    print('access_token response:\n',response)
-    print('type: ',type(response))
-    access_token_dict=response
     access_token=response['access_token']
-
+    
+    '''
     ## get conversationId
     userId='29:1lNWDIz8Jn0YgoFx8LTJWrkqchAJb1Vg0bJK-PvHxe2FHzNXzFHYaeA0P9j58qQyPVVUCKUfpbZlBNcepHMaajg'
     usesrid_office='29:1htJmKwuNtPEggpMm5kJ73ht47oIbddUOeEh1r1DFpf7vJmh83_C7Q3sBnFcxS3EJv5hHqcu0Po3_-dMmfqnMfA'
