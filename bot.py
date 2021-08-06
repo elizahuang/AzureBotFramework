@@ -112,7 +112,7 @@ class MyBot(ActivityHandler):
                   contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"新增代辦事項"，來新增TodoList\n\n  輸入"tsmc"，查看網頁的url'
                 else: 
                   contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
-            elif 'help' in turn_context.activity.text#turn_context.activity.text == 'help':
+            elif 'help' in turn_context.activity.text #turn_context.activity.text == 'help':
                 contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"新增代辦事項"，新增代辦事項，新增之事項將於事件前大約15分鐘進行提醒\n\n 輸入"tsmc"，查看網頁的url\n\n'
             elif '新增代辦事項' in turn_context.activity.text: #turn_context.activity.text == '新增代辦事項':
                 contextToReturn = MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
