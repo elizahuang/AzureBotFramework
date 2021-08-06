@@ -102,7 +102,8 @@ async def sendReminder(request):
         'client_secret':appSecret,
         'scope':'https://api.botframework.com/.default'}
     
-    response=json.loads(requests.post(url, data=(payload)).content.decode('utf-8'))
+    r=requests.post(url, data=(payload))
+    response=json.loads(r.content.decode('utf-8'))  
     access_token=response['access_token']  
     print('access_token:\n',access_token) 
     
@@ -128,27 +129,27 @@ async def sendReminder(request):
     conversation_id=conversation_response["id"]
     print('conversation_id: \n',conversation_id)
 
-    # url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversation_id)
-    # payload_template={
-    #     "type": "message",
-    #     "from": {
-    #         "id": botId,
-    #         "name": "AzureBot001_Regis"
-    #     },
-    #     "conversation": {
-    #         "id": conversation_id,
-    #         "name": "send proactive msg now"
-    #     },
-    #     "recipient": {
-    #         "id": userId,
-    #         "name":"",# "Yi Huang 黃懿"
-    #     },
-    #     "attachments": []
-    # }
-    # payload=copy.deepcopy(payload_template)
-    # payload["attachments"]+=[cardToSend]
-    # response_forSendMsg =requests.post(url, json=(payload), headers=header).content.decode('utf-8')
-    # print('response_forSendMsg',response_forSendMsg)
+    url=f'https://smba.trafficmanager.net/apac/v3/conversations/%s/activities'%(conversation_id)
+    payload_template={
+        "type": "message",
+        "from": {
+            "id": botId,
+            "name": "AzureBot001_Regis"
+        },
+        "conversation": {
+            "id": conversation_id,
+            "name": "send proactive msg now"
+        },
+        "recipient": {
+            "id": userId,
+            "name":"",# "Yi Huang 黃懿"
+        },
+        "attachments": []
+    }
+    payload=copy.deepcopy(payload_template)
+    payload["attachments"]+=[cardToSend]
+    response_forSendMsg =requests.post(url, json=(payload), headers=header).content.decode('utf-8')
+    print('response_forSendMsg',response_forSendMsg)
 
     return
 
