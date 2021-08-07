@@ -7,13 +7,13 @@ from botbuilder.schema.teams import TeamInfo, TeamsChannelAccount
 from botbuilder.core.teams import TeamsActivityHandler, TeamsInfo
 import requests
 import json, copy,re
-from updateCard import *
-from viewAllCard import *
-from addTodoCard import *
-from addOrUpdateResultCard import *
-from myEhrCard import *
-from deleteCard import *
-from reminderCard import *
+from cards.updateCard import *
+from cards.viewAllCard import *
+from cards.addTodoCard import *
+from cards.addOrUpdateResultCard import *
+from cards.myEhrCard import *
+from cards.deleteCard import *
+from cards.reminderCard import *
 
 
 # def create_hero_card() -> Attachment:
@@ -32,7 +32,6 @@ from reminderCard import *
 
 
 class MyBot(ActivityHandler):
-    # See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
     contextToReturn = None
 
     async def on_message_activity(self, turn_context: TurnContext):
@@ -73,17 +72,7 @@ class MyBot(ActivityHandler):
         # await turn_context.send_activity(f"You said '{ turn_context.activity.text }'")
         userid=TurnContext.get_conversation_reference(turn_context.activity).user.id
         print('**************get userid**************\n',userid)
-        # print(get_conversation_reference(conversation_id))
-        # print('**************get user id**************\n',(turn_context.activity).from.id)
 
-        # if ('tenant' in turn_context.activity.channel_data.keys()):
-        #     userid=TurnContext.get_conversation_reference(turn_context.activity).user.id 
-        # elif ('source' in turn_context.activity.channel_data.keys()): 
-        #     teams_tenantID=turn_context.activity.channel_data['source']['userId']
-        # else: 
-        #     teams_tenantID=turn_context.activity.channel_data['clientActivityID']
-        # print('teams_tenantID',teams_tenantID)
-        
         if turn_context.activity.text != None:
             regex=re.compile(r'工號_(\d+)')
             match=regex.search(turn_context.activity.text)
@@ -129,12 +118,12 @@ class MyBot(ActivityHandler):
             #             + "This bot will show you different types of Rich Cards. "
             #             + "Please type anything to get started."
             #         )
-            elif turn_context.activity.text == 'adaptive':
-                # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
-                #                           content=adapCard))
-                task={"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30 20:08", "todo_contents": "contents,contents contents,contents contents,contents contents,contents contents,contents", "todo_completed": True}
-                contextToReturn = MessageFactory.attachment(Attachment(
-                    content_type='application/vnd.microsoft.card.adaptive', content=prepareReminderCard(task)))
+            # elif turn_context.activity.text == 'adaptive':
+            #     # contextToReturn =MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
+            #     #                           content=adapCard))
+            #     task={"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30 20:08", "todo_contents": "contents,contents contents,contents contents,contents contents,contents contents,contents", "todo_completed": True}
+            #     contextToReturn = MessageFactory.attachment(Attachment(
+            #         content_type='application/vnd.microsoft.card.adaptive', content=prepareReminderCard(task)))
             elif '查看代辦事項' in turn_context.activity.text:#turn_context.activity.text == '查看代辦事項'
                 # tasksInfo = [{"todo_id": "123123", "todo_name": "test1", "todo_date": "2021-07-30", "start_time": "20:08", "end_date": "2021-08-01",
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": True},
@@ -142,7 +131,6 @@ class MyBot(ActivityHandler):
                 # "end_time": "12:00", "todo_contents": "contents,contents", "todo_completed": False}]
                 tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(userid))
                 if tasksInfo.status_code == requests.codes.ok:
-                    # print('taskInfos\n',requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(teams_tenantID)).content.decode('utf-8'))
                     tasksInfo=json.loads(tasksInfo.content.decode('utf-8'))
                     contextToReturn = MessageFactory.attachment(Attachment(
                         content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
@@ -166,11 +154,7 @@ class MyBot(ActivityHandler):
                                 'todo_contents': turn_context.activity.value['todo_contents'] if 'todo_contents' in turn_context.activity.value.keys() else "   ",
                                 'todo_completed': True if (turn_context.activity.value["todo_completed"]=='true') or (turn_context.activity.value["todo_completed"]==True) or (turn_context.activity.value["todo_completed"]=='True') else False,
                                 'todo_update_date': turn_context.activity.timestamp.strftime("%Y/%m/%d"),
-                                # 'employee_id': '120734'#turn_context.activity.channel_data['tenant']['id'],
                                 }
-                                # 'employee_id': turn_context.activity.channel_data['tenant']['id'],
-                                # "line_user_id": turn_context.activity.channel_data['tenant']['id'],    #delete
-                                # "teams_user_id": turn_context.activity.channel_data['tenant']['id']    #delete
 
                     # 將資料加入 POST 請求中
                     r = requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(userid), data = json.dumps(my_data))
@@ -184,8 +168,6 @@ class MyBot(ActivityHandler):
                 
                 elif turn_context.activity.value['card_request_type'] == 'update_task':                
                     data=turn_context.activity.value
-                    print('data:\n',data)
-                    # data["todo_date"]='2021-08-04 18:00'
                     if 'todo_date' not in data.keys() or 'todo_name' not in data.keys():
                         await turn_context.send_activity("新增失敗，請確認代辦事項之項目名稱、日期、時間是否填寫(不可為空值)。")
                         return                    
@@ -216,8 +198,6 @@ class MyBot(ActivityHandler):
                     date_time=data["todo_date"]+' '+data["start_time"] if "start_time" in data.keys() else data["todo_date"]+' '+"00:00"
                     singletask={"todo_id":data["todo_id"],"todo_name":data["todo_name"],"todo_date":date_time,"todo_contents":data["todo_contents"],
                     "todo_completed":True if (data["todo_completed"]=='true') or (data["todo_completed"]==True) or (data["todo_completed"]=='True') else False}
-                    print('singletask:\n',singletask)
-                    # call submit出去的API
                     requests.put(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(userid,data["todo_id"]),json=singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content=addOrUpdateResultCard(singletask)))
