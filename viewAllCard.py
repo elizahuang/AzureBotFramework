@@ -198,7 +198,7 @@ def prepareViewAllCard(taskInfos):
         print('task\n',task)
         task_template[0]["facts"][0]["value"]=task["todo_id"]
         task_template[0]["facts"][1]["value"]=task["todo_name"]
-        task_template[0]["facts"][2]["value"]=str('test test test '+task["todo_date"])  #task["start_date"]
+        task_template[0]["facts"][2]["value"]=task["todo_date"][:10]+" "+task["todo_date"][11:16] #task["start_date"]
         # task_template[0]["facts"][3]["value"]=task["start_time"]      
         # task_template[0]["facts"][4]["value"]=task["end_date"] 
         # task_template[0]["facts"][5]["value"]=task["end_time"]
