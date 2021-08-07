@@ -16,19 +16,19 @@ from deleteCard import *
 from reminderCard import *
 
 
-def create_hero_card() -> Attachment:
-    herocard = HeroCard(title="推薦以下兩個選項",
-    images=[
-        CardImage(
-            url="https://ct.yimg.com/xd/api/res/1.2/VhPkyLMc5NAyXyGfjLgA5g--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD01ODU7cT04NTtyb3RhdGU9YXV0bzt3PTcwMA--/https://s.yimg.com/ob/image/82cbd7d4-5802-4b2b-99bd-690512b34730.jpg"
-        )],  # https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg
-    buttons=[
-        CardAction(type=ActionTypes.open_url, title="url1",
-                   value="https://www.google.com"),
-        CardAction(type=ActionTypes.open_url, title="url2",
-                   value="https://www.yahoo.com"),
-        ])
-    return CardFactory.hero_card(herocard)
+# def create_hero_card() -> Attachment:
+#     herocard = HeroCard(title="推薦以下兩個選項",
+#     images=[
+#         CardImage(
+#             url="https://ct.yimg.com/xd/api/res/1.2/VhPkyLMc5NAyXyGfjLgA5g--/YXBwaWQ9eXR3YXVjdGlvbnNlcnZpY2U7aD01ODU7cT04NTtyb3RhdGU9YXV0bzt3PTcwMA--/https://s.yimg.com/ob/image/82cbd7d4-5802-4b2b-99bd-690512b34730.jpg"
+#         )],  # https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg
+#     buttons=[
+#         CardAction(type=ActionTypes.open_url, title="url1",
+#                    value="https://www.google.com"),
+#         CardAction(type=ActionTypes.open_url, title="url2",
+#                    value="https://www.yahoo.com"),
+#         ])
+#     return CardFactory.hero_card(herocard)
 
 
 class MyBot(ActivityHandler):
@@ -109,11 +109,11 @@ class MyBot(ActivityHandler):
                 print('result: ',result)
                 if result.status_code == requests.codes.ok:
                 # response
-                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"新增代辦事項"，來新增TodoList\n\n  輸入"tsmc"，查看網頁的url'
+                  contextToReturn = '恭喜您，添加成功! \n\n 請輸入 "help"，來查看更多服務\n\n 輸入"查看代辦事項"，查看未完成的代辦事項\n\n 輸入"新增代辦事項"，來新增TodoList\n\n  輸入"tsmc"，查看網頁的url'
                 else: 
                   contextToReturn ='工號添加失敗，請再嘗試一次或聯絡IT help desk'
             elif 'help' in turn_context.activity.text: #turn_context.activity.text == 'help':
-                contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看代辦事項\n\n 輸入"新增代辦事項"，新增代辦事項，新增之事項將於事件前大約15分鐘進行提醒\n\n 輸入"tsmc"，查看網頁的url\n\n'
+                contextToReturn = '輸入"工號_XXXXXX  (舉例)工號_120734"，新增工號以方便連結 teams, line 及 web 的服務\n\n 輸入"查看代辦事項"，查看未完成的代辦事項\n\n 輸入"新增代辦事項"，新增代辦事項，新增之事項將於事件前大約15分鐘進行提醒\n\n 輸入"tsmc"，查看網頁的url\n\n'
             elif '新增代辦事項' in turn_context.activity.text: #turn_context.activity.text == '新增代辦事項':
                 contextToReturn = MessageFactory.attachment(Attachment(content_type='application/vnd.microsoft.card.adaptive',
                                         content=copy.deepcopy(addToDoListAdapCard)))

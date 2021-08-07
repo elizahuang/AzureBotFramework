@@ -192,7 +192,7 @@ def prepareViewAllCardTest():
 #               "end_time":"12:00","todo_contents":"contents,contents","todo_completed":False}]
 def prepareViewAllCard(taskInfos):
     cardReturn=copy.deepcopy(viewAllCard)
-
+    print('*****************taskInfos for checking*****************\n',taskInfos)
     for task in taskInfos:    
         task_template=copy.deepcopy(singleTask)
         print('task\n',task)
