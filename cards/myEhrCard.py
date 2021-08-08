@@ -165,11 +165,11 @@ columnSet= {
                 "style": "default",
                 "height": "stretch",
                 "verticalContentAlignment": "Center",
-                "width": 30,
+                "width": 35,
             },
             {
                 "type": "Column",
-                "width": 70,
+                "width": 65,
                 "items": [
                     {
                         "type": "TextBlock",
