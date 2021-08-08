@@ -132,8 +132,12 @@ class MyBot(ActivityHandler):
                 tasksInfo=requests.get(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s'%(userid))
                 if tasksInfo.status_code == requests.codes.ok:
                     tasksInfo=json.loads(tasksInfo.content.decode('utf-8'))
-                    contextToReturn = MessageFactory.attachment(Attachment(
-                        content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(tasksInfo)))
+                    tasksInfoQueue=[tasksInfo[x:x+5] for x in range(0, len(tasksInfo),5)]
+                    for item in tasksInfoQueue:
+                        contextToReturn = MessageFactory.attachment(Attachment(
+                            content_type='application/vnd.microsoft.card.adaptive', content=prepareViewAllCard(item)))
+                        await turn_context.send_activity(contextToReturn)  
+                    return                  
                 else: 
                     contextToReturn ='目前沒有您的代辦事項，謝謝!!'
             else:
