@@ -212,7 +212,7 @@ def prepareViewAllCard(taskInfos):
                 task_template[1]["isVisible"]=True
         task_template[2]["columns"][0]["items"][0]["actions"][0]["data"].update(task)
         task_template[2]["columns"][1]["items"][0]["actions"][0]["data"].update(task)
-        
+        print('*********task_template for checking delete********',task_template)
         cardReturn["body"]=cardReturn["body"]+task_template      
         
     return cardReturn
