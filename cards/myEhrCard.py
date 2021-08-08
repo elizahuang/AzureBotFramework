@@ -208,7 +208,7 @@ def prepareEhrCard():
         for singleUrl in urlinfos:
             columnSetSingleUrl=copy.deepcopy(columnSet)
             columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["title"]=singleUrl["name"]
-            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["url"]=singleUrl["url"]
+            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["url"]=singleUrl["url"] if "url" not in singleUrl.keys() else "https://www.google.com/"
             columnSetSingleUrl["columns"][1]["items"][0]["text"]=singleUrl["description"]
             singleShowCard["card"]["body"]+=[columnSetSingleUrl]
         myEhrCard["actions"]+=[singleShowCard]
