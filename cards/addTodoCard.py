@@ -1,5 +1,5 @@
 import os, base64
-# file = os.path.join(os.path.dirname(os.path.realpath(__file__)), "winnie.jpg")#os.getcwd()
+# file = os.path.join(os.path.dirname(os.getcwd(), "winnie.jpg")#os.getcwd()
 dirname, filename = os.path.split(os.path.abspath(__file__))
 file = os.path.join(dirname, "winnie.jpg")
 image = open(file, 'rb')
