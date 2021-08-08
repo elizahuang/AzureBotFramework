@@ -65,8 +65,7 @@ singleTask= [{
                                     "type": "Action.Submit",
                                     "title": "更新項目",
                                     "data": {
-                                        "card_request_type": "update_task",
-                                        "task_id": "12342151"
+                                        "card_request_type": "update_task"
                                     }
                                 }
                             ]
@@ -84,8 +83,7 @@ singleTask= [{
                                     "type": "Action.Submit",
                                     "title": "刪除項目",
                                     "data": {
-                                        "card_request_type": "delete_task",
-                                        "task_id": "12342151"
+                                        "card_request_type": "delete_task"
                                     }
                                 }
                             ]

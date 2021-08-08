@@ -71,7 +71,7 @@ deleteCard={
 }
 
 def deleteTask(singletask):
-    print('singletask:\n',singletask)
+    print('*****************singletask:*****************\n',singletask)
     cardToReturn=copy.deepcopy(deleteCard)
     cardToReturn["body"][1]["facts"][0]["value"]=singletask["todo_id"]
     cardToReturn["body"][1]["facts"][1]["value"]=singletask["todo_name"]

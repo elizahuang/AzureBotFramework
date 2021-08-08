@@ -178,7 +178,7 @@ class MyBot(ActivityHandler):
 
                 elif turn_context.activity.value['card_request_type'] == 'delete_task':                    
                     data=turn_context.activity.value
-                    singletask ={"todo_id":data["todo_id"]}
+                    singletask ={"todo_id":data["todo_id"],"todo_name":data["todo_name"]}
                     print('singletask:\n',singletask)
                     contextToReturn =MessageFactory.attachment(Attachment(
                     content_type='application/vnd.microsoft.card.adaptive', content= deleteTask(singletask) ))
