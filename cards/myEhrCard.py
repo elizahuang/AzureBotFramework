@@ -205,10 +205,12 @@ def prepareEhrCard():
     for singleCategory, urlinfos in sortedInfoDict.items():
         singleShowCard=copy.deepcopy(showCardAction)
         singleShowCard["title"]=singleCategory
+        
         for singleUrl in urlinfos:
+            print('singleUrl: ',singleUrl)
             columnSetSingleUrl=copy.deepcopy(columnSet)
             columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["title"]=singleUrl["name"]
-            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["url"]=singleUrl["url"] if "url" not in singleUrl.keys() else "https://www.google.com/"
+            columnSetSingleUrl["columns"][0]["items"][0]["actions"][0]["url"]=singleUrl["url"] if "url" in singleUrl.keys() else "https://www.google.com/"
             columnSetSingleUrl["columns"][1]["items"][0]["text"]=singleUrl["description"]
             singleShowCard["card"]["body"]+=[columnSetSingleUrl]
         myEhrCard["actions"]+=[singleShowCard]
