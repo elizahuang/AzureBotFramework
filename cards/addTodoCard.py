@@ -3,7 +3,7 @@ file = os.path.join(os.getcwd(), "winnie.jpg")
 image = open(file, 'rb')
 image_read = image.read()
 image_64_encode = base64.b64encode(image_read).decode()
-
+print('file: ',file)
 addToDoListAdapCard={
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
