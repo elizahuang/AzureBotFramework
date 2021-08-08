@@ -150,8 +150,7 @@ singleTask_old= [{
                                     "type": "Action.Submit",
                                     "title": "Update Task",
                                     "data": {
-                                        "card_request_type": "update_task",
-                                        "task_id": "12342151"
+                                        "card_request_type": "update_task"
                                     }
                                 }
                             ]
@@ -169,8 +168,7 @@ singleTask_old= [{
                                     "type": "Action.Submit",
                                     "title": "Delete Task",
                                     "data": {
-                                        "card_request_type": "delete_task",
-                                        "task_id": "12342151"
+                                        "card_request_type": "delete_task"
                                     }
                                 }
                             ]

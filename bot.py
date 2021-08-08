@@ -188,6 +188,7 @@ class MyBot(ActivityHandler):
                     r=requests.delete(f'https://tsmcbot-404notfound.du.r.appspot.com/api/todo/%s/%s'%(userid,data["todo_id"]))#,json=singletask
                     print('delete response: ', r.status_code)
                     contextToReturn='Todo List 項目ID: '+data["todo_id"]+' 資料成功刪除'
+                    
                 elif turn_context.activity.value['card_request_type'] =='cancel_delete_task':
                     data=turn_context.activity.value
                     contextToReturn='Todo List 項目ID: '+data["todo_id"]+' 資料未刪除'
