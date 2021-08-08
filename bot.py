@@ -94,7 +94,7 @@ class MyBot(ActivityHandler):
                     "user_id":userid
                     }
                 print('data: ',data)
-                result=requests.post(f'https://tsmcbot-404notfound.du.r.appspot.com/api/%s'%(data['employee_id']),json=data)
+                result=requests.post('https://tsmcbot-404notfound.du.r.appspot.com/api/employee-id',json=data)
                 print('result: ',result)
                 if result.status_code == requests.codes.ok:
                 # response
